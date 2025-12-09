@@ -2,8 +2,9 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Terminal, Cpu, Rocket, Brain } from "lucide-react"
+import { Cpu, Rocket, Brain, Terminal } from "lucide-react"
 import { CosmicHazeDivider } from "./cosmic-haze-divider"
+import { RocketIcon } from "@radix-ui/react-icons"
 
 const stats = [
   { label: "Years in Orbit", value: "5+", icon: Rocket },
@@ -21,7 +22,7 @@ export function AboutSection() {
       <CosmicHazeDivider variant="orange" />
       <section id="about" ref={containerRef} className="relative py-32 z-[5]">
         {/* Section Background */}
-        <div className="absolute inset-0 bg-cosmic-black/90" />
+        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm" />
 
         <div className="relative max-w-6xl mx-auto px-6">
           {/* Terminal Header */}

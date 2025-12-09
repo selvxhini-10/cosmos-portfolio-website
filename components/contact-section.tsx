@@ -4,8 +4,9 @@ import type React from "react"
 
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { Send, Mail, MapPin, Github, Linkedin, Twitter } from "lucide-react"
+import { MapPin, Github, Linkedin, Twitter } from "lucide-react"
 import { CosmicHazeDivider } from "./cosmic-haze-divider"
+import { PaperPlaneIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons"
 
 export function ContactSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -29,7 +30,7 @@ export function ContactSection() {
     <>
       <CosmicHazeDivider variant="red" />
       <section id="contact" ref={containerRef} className="relative py-32 z-[5]">
-        <div className="absolute inset-0 bg-cosmic-black/90" />
+        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm" />
 
         {/* Nebula glow effect */}
         <div className="absolute inset-0 pointer-events-none">
@@ -73,7 +74,7 @@ export function ContactSection() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-4 text-cosmic-white/70">
                     <div className="w-12 h-12 rounded-full border border-cosmic-gold/30 flex items-center justify-center">
-                      <Mail className="w-5 h-5 text-cosmic-gold" />
+                      <EnvelopeClosedIcon className="w-5 h-5 text-cosmic-gold" />
                     </div>
                     <div>
                       <p className="text-sm text-cosmic-white/50">Email</p>
@@ -190,7 +191,7 @@ export function ContactSection() {
                       </>
                     ) : (
                       <>
-                        <Send className="w-5 h-5" />
+                        <PaperPlaneIcon className="w-5 h-5" />
                         Send Transmission
                       </>
                     )}

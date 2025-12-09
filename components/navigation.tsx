@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Sparkles } from "lucide-react"
+import { Menu, Sparkles } from "lucide-react"
+import { Cross2Icon } from "@radix-ui/react-icons"
 
 const navItems = [
   { name: "About", href: "#about" },
@@ -64,7 +65,7 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden text-cosmic-white p-2">
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <Cross2Icon size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>

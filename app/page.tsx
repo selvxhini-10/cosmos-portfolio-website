@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import { HeroSection } from "@/components/hero-section"
 import { AboutSection } from "@/components/about-section"
 import { ExperienceSection } from "@/components/experience-section"
@@ -6,22 +9,35 @@ import { SkillsSection } from "@/components/skills-section"
 import { ContactSection } from "@/components/contact-section"
 import { Navigation } from "@/components/navigation"
 import { CosmicBackground } from "@/components/cosmic-background"
+import { CosmicControls } from "@/components/cosmic-controls"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
+  const [cosmicVisible, setCosmicVisible] = useState(true)
+  const [cosmicIntensity, setCosmicIntensity] = useState(100)
+
   return (
     <SmoothScroll>
       <main className="relative min-h-screen overflow-x-hidden">
-        <CosmicBackground />
-        <Navigation />
-        <HeroSection />
-        <AboutSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <SkillsSection />
-        <ContactSection />
-        <Footer />
+        {/* Cosmic Background Layer - visible behind all content */}
+          <div className="fixed inset-0 z-11">
+            <CosmicBackground />
+        </div>
+
+        {/* Content Layer */}
+        <div className="relative z-10">
+          <Navigation />
+          <HeroSection />
+          <AboutSection />
+          <ExperienceSection />
+          <ProjectsSection />
+          <SkillsSection />
+          <ContactSection />
+          <Footer />
+        </div>
+
+        {/* Controls Layer - always on top */}
       </main>
     </SmoothScroll>
   )

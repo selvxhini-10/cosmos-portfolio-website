@@ -1,314 +1,262 @@
 "use client"
 
-import { useRef, useEffect, useState, useMemo } from "react"
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import { Stars } from "@react-three/drei"
-import * as THREE from "three"
+import { useEffect, useRef } from "react"
 
-function ParallaxStars() {
-  const starsRef = useRef<THREE.Points>(null)
+// Particle displacement shader with WebGL
+const vertexShaderSource = `
+  attribute vec2 a_position;
+  attribute vec2 a_texCoord;
+  varying vec2 v_texCoord;
+  void main() {
+    gl_Position = vec4(a_position, 0.0, 1.0);
+    v_texCoord = a_texCoord;
+  }
+`
 
-  useFrame(() => {
-    if (starsRef.current) {
-      starsRef.current.rotation.x += 0.00008
-      starsRef.current.rotation.y += 0.00005
+const fragmentShaderSource = `
+  precision mediump float;
+  uniform vec2 u_mouse;
+  uniform float u_time;
+  uniform vec2 u_resolution;
+  varying vec2 v_texCoord;
+  
+  // Noise function for organic movement
+  float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+  }
+  
+  void main() {
+    vec2 uv = gl_FragCoord.xy / u_resolution;
+    vec2 mouse = u_mouse / u_resolution;
+    
+    // Distance from mouse with falloff
+    float dist = distance(uv, mouse);
+    float displacement = smoothstep(0.3, 0.0, dist) * 0.08;
+    
+    // Create particle field
+    vec2 particleUV = uv * 80.0;
+    vec2 cell = floor(particleUV);
+    vec2 frac = fract(particleUV);
+    
+    float particleRandom = random(cell);
+    
+    // Displace particles away from cursor
+    vec2 particleCenter = vec2(0.5) + (uv - mouse) * displacement * 2.0;
+    float particleDist = length(frac - particleCenter);
+    
+    // Animated stars moving across screen
+    float movingStar = 0.0;
+    for(float i = 0.0; i < 5.0; i++) {
+      vec2 starPos = vec2(
+        mod(u_time * 0.05 + i * 0.2 + particleRandom, 1.0),
+        mod(uv.y + i * 0.15 + particleRandom * 0.5, 1.0)
+      );
+      float starDist = distance(uv, starPos);
+      movingStar += smoothstep(0.008, 0.0, starDist) * (0.5 + particleRandom * 0.5);
     }
-  })
-
-  return <Stars ref={starsRef} radius={200} depth={100} count={2000} factor={4} saturation={0} fade speed={0.3} />
-}
-
-function FloatingOrbs() {
-  const count = 15
-  const meshRef = useRef<THREE.InstancedMesh>(null)
-  const dummy = useMemo(() => new THREE.Object3D(), [])
-
-  const orbData = useMemo(
-    () =>
-      new Array(count).fill(0).map(() => ({
-        x: THREE.MathUtils.randFloatSpread(60),
-        y: THREE.MathUtils.randFloatSpread(40),
-        z: THREE.MathUtils.randFloat(-30, -5),
-        speedX: THREE.MathUtils.randFloat(0.005, 0.02),
-        speedY: THREE.MathUtils.randFloat(0.003, 0.015),
-        phase: Math.random() * Math.PI * 2,
-        scale: THREE.MathUtils.randFloat(0.3, 0.8),
-      })),
-    [],
-  )
-
-  useFrame(({ clock }) => {
-    const t = clock.elapsedTime
-    orbData.forEach((orb, i) => {
-      const x = orb.x + Math.sin(t * orb.speedX + orb.phase) * 8
-      const y = orb.y + Math.cos(t * orb.speedY + orb.phase) * 6
-
-      dummy.position.set(x, y, orb.z)
-      dummy.scale.setScalar(orb.scale * (1 + Math.sin(t * 0.5 + orb.phase) * 0.2))
-      dummy.updateMatrix()
-      meshRef.current!.setMatrixAt(i, dummy.matrix)
-    })
-    meshRef.current!.instanceMatrix.needsUpdate = true
-  })
-
-  return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-      <sphereGeometry args={[1, 16, 16]} />
-      <meshBasicMaterial color="#ffffff" transparent opacity={0.08} blending={THREE.AdditiveBlending} />
-    </instancedMesh>
-  )
-}
-
-function ShootingStars() {
-  const count = 40
-  const meshRef = useRef<THREE.InstancedMesh>(null)
-  const dummy = useMemo(() => new THREE.Object3D(), [])
-
-  const starData = useMemo(
-    () =>
-      new Array(count).fill(0).map(() => ({
-        x: THREE.MathUtils.randFloatSpread(80),
-        y: THREE.MathUtils.randFloatSpread(60),
-        z: THREE.MathUtils.randFloat(-50, -10),
-        speed: THREE.MathUtils.randFloat(0.15, 0.4), // Faster speed
-        angle: THREE.MathUtils.randFloat(-0.3, 0.3),
-        length: THREE.MathUtils.randFloat(0.5, 2),
-      })),
-    [],
-  )
-
-  useFrame(() => {
-    starData.forEach((star, i) => {
-      star.x += star.speed
-      star.y -= star.speed * 0.3
-
-      if (star.x > 40) {
-        star.x = THREE.MathUtils.randFloat(-50, -40)
-        star.y = THREE.MathUtils.randFloat(20, 40)
-      }
-
-      dummy.position.set(star.x, star.y, star.z)
-      dummy.rotation.z = -Math.PI / 4 + star.angle
-      dummy.scale.set(star.length, 0.02, 0.02)
-      dummy.updateMatrix()
-      meshRef.current!.setMatrixAt(i, dummy.matrix)
-    })
-    meshRef.current!.instanceMatrix.needsUpdate = true
-  })
-
-  return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshBasicMaterial color="#ffffff" transparent opacity={0.7} blending={THREE.AdditiveBlending} />
-    </instancedMesh>
-  )
-}
-
-function Constellations() {
-  const linesRef = useRef<THREE.LineSegments>(null)
-
-  const positions = useMemo(() => {
-    const pts: number[] = []
-    for (let i = 0; i < 20; i++) {
-      const x1 = THREE.MathUtils.randFloatSpread(40)
-      const y1 = THREE.MathUtils.randFloatSpread(30)
-      const z1 = THREE.MathUtils.randFloat(-40, -20)
-
-      const x2 = x1 + THREE.MathUtils.randFloat(-2, 2)
-      const y2 = y1 + THREE.MathUtils.randFloat(-2, 2)
-      const z2 = z1 + THREE.MathUtils.randFloat(-0.5, 0.5)
-
-      pts.push(x1, y1, z1, x2, y2, z2)
+    
+    // Static particle glow
+    float particle = smoothstep(0.15, 0.0, particleDist) * (0.3 + particleRandom * 0.4);
+    
+    // Constellation lines (subtle connecting lines)
+    float constellation = 0.0;
+    if(mod(cell.x + cell.y, 7.0) < 1.0) {
+      float lineX = abs(frac.x - 0.5);
+      constellation = smoothstep(0.02, 0.0, lineX) * 0.15;
     }
-    return new Float32Array(pts)
-  }, [])
+    
+    // Combine effects
+    float brightness = particle + movingStar + constellation;
+    vec3 color = mix(
+      vec3(1.0, 0.95, 0.9),  // Warm white
+      vec3(1.0, 0.7, 0.4),   // Golden orange
+      particleRandom
+    );
+    
+    gl_FragColor = vec4(color * brightness, brightness * 0.8);
+  }
+`
 
-  useFrame(({ clock }) => {
-    if (!linesRef.current) return
-    const t = clock.getElapsedTime()
-    ;(linesRef.current.material as THREE.LineBasicMaterial).opacity = 0.2 + Math.sin(t * 0.8) * 0.1
-  })
-
-  return (
-    <lineSegments ref={linesRef}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" array={positions} count={positions.length / 3} itemSize={3} />
-      </bufferGeometry>
-      <lineBasicMaterial color="#ffb080" opacity={0.25} transparent />
-    </lineSegments>
-  )
-}
-
-function CosmicHazePlane({
-  position,
-  scale,
-  color1,
-  color2,
-  pulseSpeed = 0.3,
-}: { position: [number, number, number]; scale: number; color1: string; color2: string; pulseSpeed?: number }) {
-  const meshRef = useRef<THREE.Mesh>(null)
-
-  const texture = useMemo(() => {
-    const canvas = document.createElement("canvas")
-    canvas.width = 512
-    canvas.height = 512
-    const ctx = canvas.getContext("2d")!
-
-    const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 256)
-    gradient.addColorStop(0, color1)
-    gradient.addColorStop(0.4, color2)
-    gradient.addColorStop(1, "rgba(0, 0, 0, 0)")
-
-    ctx.fillStyle = gradient
-    ctx.fillRect(0, 0, 512, 512)
-
-    return new THREE.CanvasTexture(canvas)
-  }, [color1, color2])
-
-  useFrame(({ clock }) => {
-    if (!meshRef.current) return
-    const t = clock.elapsedTime
-    meshRef.current.rotation.z = Math.sin(t * 0.02) * 0.03
-    ;(meshRef.current.material as THREE.MeshBasicMaterial).opacity = 0.12 + Math.sin(t * pulseSpeed) * 0.04
-  })
-
-  return (
-    <mesh ref={meshRef} position={position}>
-      <planeGeometry args={[35 * scale, 25 * scale]} />
-      <meshBasicMaterial
-        map={texture}
-        transparent
-        opacity={0.12}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </mesh>
-  )
-}
-
-function NebulaPlane({
-  position,
-  scale,
-  opacity,
-}: { position: [number, number, number]; scale: number; opacity: number }) {
-  const meshRef = useRef<THREE.Mesh>(null)
-
-  const texture = useMemo(() => {
-    const canvas = document.createElement("canvas")
-    canvas.width = 600
-    canvas.height = 600
-    const ctx = canvas.getContext("2d")!
-
-    const gradient = ctx.createRadialGradient(300, 300, 0, 300, 300, 300)
-    gradient.addColorStop(0, "rgba(255, 140, 80, 0.25)")
-    gradient.addColorStop(0.3, "rgba(255, 100, 60, 0.15)")
-    gradient.addColorStop(0.6, "rgba(180, 80, 60, 0.08)")
-    gradient.addColorStop(1, "rgba(0, 0, 0, 0)")
-
-    ctx.fillStyle = gradient
-    ctx.fillRect(0, 0, 600, 600)
-
-    return new THREE.CanvasTexture(canvas)
-  }, [])
-
-  useFrame(({ clock }) => {
-    if (!meshRef.current) return
-    const t = clock.elapsedTime
-
-    meshRef.current.rotation.z = Math.sin(t * 0.03) * 0.03
-    ;(meshRef.current.material as THREE.MeshBasicMaterial).opacity = opacity + Math.sin(t * 0.5) * 0.03
-  })
-
-  return (
-    <mesh ref={meshRef} position={position}>
-      <planeGeometry args={[45 * scale, 35 * scale]} />
-      <meshBasicMaterial
-        map={texture}
-        transparent
-        opacity={opacity}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-      />
-    </mesh>
-  )
-}
-
-function CameraDolly() {
-  const { camera } = useThree()
-
-  useFrame(({ clock }) => {
-    const t = clock.elapsedTime
-    camera.position.z = 12 + Math.sin(t * 0.05) * 0.5
-    camera.position.x = Math.sin(t * 0.03) * 0.4
-    camera.position.y = Math.cos(t * 0.02) * 0.3
-  })
-
-  return null
-}
-
-function Scene() {
-  return (
-    <>
-      <ambientLight intensity={0.2} />
-      <pointLight position={[10, 10, 10]} intensity={0.4} color="#ffb060" />
-      <pointLight position={[-10, -10, -5]} intensity={0.3} color="#ff6040" />
-
-      <CameraDolly />
-      <ParallaxStars />
-      <Constellations />
-      <ShootingStars />
-      <FloatingOrbs />
-
-      {/* Nebula layers */}
-      <NebulaPlane position={[0, 0, -45]} scale={2.5} opacity={0.12} />
-      <NebulaPlane position={[12, 5, -35]} scale={1.8} opacity={0.1} />
-      <NebulaPlane position={[-10, -5, -30]} scale={1.5} opacity={0.08} />
-
-      {/* Orange/Gold/Red cosmic haze fog planes */}
-      <CosmicHazePlane
-        position={[-12, 8, -25]}
-        scale={2}
-        color1="rgba(255, 120, 60, 0.2)"
-        color2="rgba(255, 80, 40, 0.1)"
-        pulseSpeed={0.25}
-      />
-      <CosmicHazePlane
-        position={[15, -5, -30]}
-        scale={2.2}
-        color1="rgba(255, 180, 80, 0.18)"
-        color2="rgba(255, 140, 60, 0.08)"
-        pulseSpeed={0.35}
-      />
-      <CosmicHazePlane
-        position={[0, 12, -20]}
-        scale={1.8}
-        color1="rgba(255, 100, 50, 0.15)"
-        color2="rgba(200, 60, 40, 0.06)"
-        pulseSpeed={0.4}
-      />
-      <CosmicHazePlane
-        position={[-8, -10, -35]}
-        scale={2.5}
-        color1="rgba(255, 160, 100, 0.12)"
-        color2="rgba(255, 120, 80, 0.05)"
-        pulseSpeed={0.2}
-      />
-    </>
-  )
+interface Particle {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  size: number
+  opacity: number
+  hue: number
 }
 
 export function CosmicBackground() {
-  const [mounted, setMounted] = useState(false)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const glCanvasRef = useRef<HTMLCanvasElement>(null)
+  const mouseRef = useRef({ x: 0, y: 0 })
+  const particlesRef = useRef<Particle[]>([])
 
-  useEffect(() => setMounted(true), [])
+  // WebGL particle displacement effect
+  useEffect(() => {
+    const canvas = glCanvasRef.current
+    if (!canvas) return
 
-  if (!mounted) return null
+    const gl = canvas.getContext("webgl")
+    if (!gl) {
+      console.warn("WebGL not supported")
+      return
+    }
+
+    // Setup WebGL
+    const vertexShader = gl.createShader(gl.VERTEX_SHADER)!
+    gl.shaderSource(vertexShader, vertexShaderSource)
+    gl.compileShader(vertexShader)
+
+    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER)!
+    gl.shaderSource(fragmentShader, fragmentShaderSource)
+    gl.compileShader(fragmentShader)
+
+    const program = gl.createProgram()!
+    gl.attachShader(program, vertexShader)
+    gl.attachShader(program, fragmentShader)
+    gl.linkProgram(program)
+    gl.useProgram(program)
+
+    // Setup geometry (full screen quad)
+    const positions = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1])
+    const texCoords = new Float32Array([0, 0, 1, 0, 0, 1, 1, 1])
+
+    const positionBuffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW)
+
+    const positionLocation = gl.getAttribLocation(program, "a_position")
+    gl.enableVertexAttribArray(positionLocation)
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0)
+
+    const texCoordBuffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer)
+    gl.bufferData(gl.ARRAY_BUFFER, texCoords, gl.STATIC_DRAW)
+
+    const texCoordLocation = gl.getAttribLocation(program, "a_texCoord")
+    gl.enableVertexAttribArray(texCoordLocation)
+    gl.vertexAttribPointer(texCoordLocation, 2, gl.FLOAT, false, 0, 0)
+
+    // Get uniform locations
+    const mouseLocation = gl.getUniformLocation(program, "u_mouse")
+    const timeLocation = gl.getUniformLocation(program, "u_time")
+    const resolutionLocation = gl.getUniformLocation(program, "u_resolution")
+
+    // Enable blending
+    gl.enable(gl.BLEND)
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+
+    // Resize handler
+    const resize = () => {
+      canvas.width = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
+      gl.viewport(0, 0, canvas.width, canvas.height)
+      gl.uniform2f(resolutionLocation, canvas.width, canvas.height)
+    }
+    resize()
+    window.addEventListener("resize", resize)
+
+    // Animation loop
+    let raf: number
+    const startTime = Date.now()
+    const animate = () => {
+      const time = (Date.now() - startTime) / 1000
+
+      gl.uniform2f(mouseLocation, mouseRef.current.x, mouseRef.current.y)
+      gl.uniform1f(timeLocation, time)
+
+      gl.clearColor(0, 0, 0, 0)
+      gl.clear(gl.COLOR_BUFFER_BIT)
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+
+      raf = requestAnimationFrame(animate)
+    }
+    animate()
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener("resize", resize)
+      gl.deleteProgram(program)
+      gl.deleteShader(vertexShader)
+      gl.deleteShader(fragmentShader)
+    }
+  }, [])
+
+  // Canvas 2D for additional animated stars
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")!
+
+    // Initialize shooting stars
+    const createShootingStar = (): Particle => ({
+      x: Math.random() * canvas.width,
+      y: -20,
+      vx: (Math.random() - 0.5) * 2,
+      vy: Math.random() * 3 + 2,
+      size: Math.random() * 2 + 1,
+      opacity: 1,
+      hue: Math.random() * 60 + 30, // Gold to orange range
+    })
+
+    for (let i = 0; i < 50; i++) {
+      particlesRef.current.push(createShootingStar())
+    }
+
+    let raf: number
+    const animate = () => {
+      canvas.width = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      // Update and draw particles
+      particlesRef.current.forEach((particle, index) => {
+        particle.x += particle.vx
+        particle.y += particle.vy
+        particle.opacity -= 0.003
+
+        // Reset particle if off-screen
+        if (particle.y > canvas.height || particle.opacity <= 0) {
+          particlesRef.current[index] = createShootingStar()
+          return
+        }
+
+        // Draw particle with trail
+        ctx.save()
+        ctx.globalAlpha = particle.opacity
+        const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size * 3)
+        gradient.addColorStop(0, `hsla(${particle.hue}, 100%, 70%, 0.8)`)
+        gradient.addColorStop(1, `hsla(${particle.hue}, 100%, 50%, 0)`)
+        ctx.fillStyle = gradient
+        ctx.fillRect(particle.x - particle.size * 3, particle.y - particle.size * 3, particle.size * 6, particle.size * 6)
+        ctx.restore()
+      })
+
+      raf = requestAnimationFrame(animate)
+    }
+    animate()
+
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
+  // Mouse tracking
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY }
+    }
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none">
-      <Canvas camera={{ position: [0, 0, 10], fov: 60 }} gl={{ antialias: true, alpha: true }}>
-        <Scene />
-      </Canvas>
+    <div className="absolute inset-0 w-full h-full pointer-events-none">
+      {/* WebGL particle displacement layer */}
+      <canvas ref={glCanvasRef} className="absolute inset-0 w-full h-full" style={{ mixBlendMode: "screen" }} />
+      {/* Canvas 2D shooting stars layer */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ mixBlendMode: "screen" }} />
     </div>
   )
 }

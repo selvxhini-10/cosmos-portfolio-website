@@ -4,7 +4,8 @@ import type React from "react"
 
 import { useRef, useState, useCallback } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { ChevronDown, Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin, Mail} from "lucide-react"
+import { ChevronDownIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons"
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -16,7 +17,6 @@ export function HeroSection() {
   })
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const { clientX, clientY } = e
@@ -34,20 +34,25 @@ export function HeroSection() {
       onMouseMove={handleMouseMove}
       className="relative min-h-screen flex flex-col overflow-hidden z-[5]"
     >
-      {/* Background Image with Parallax */}
-      <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-200"
+      {/* Background Video with Parallax */}
+      <motion.div style={{ y }} className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-200"
           style={{
-            backgroundImage: `url(/images/hero-bg.png)`,
             transform: `translate(${mousePosition.x * 15}px, ${mousePosition.y * 15}px) scale(1.1)`,
           }}
-        />
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-cosmic-black/30" />
       </motion.div>
 
       {/* Main Content */}
-      <motion.div style={{ opacity }} className="relative z-20 flex-1 flex flex-col px-6 max-w-5xl mx-auto w-full">
+      <div className="relative z-20 flex-1 flex flex-col px-6 max-w-5xl mx-auto w-full">
         <div className="pt-28 md:pt-32">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -161,13 +166,11 @@ export function HeroSection() {
               className="flex flex-col items-center gap-2 text-cosmic-white/50"
             >
               <span className="text-xs tracking-[0.3em] uppercase">Scroll to Explore</span>
-              <ChevronDown size={24} />
+              <ChevronDownIcon className="w-6 h-6" />
             </motion.div>
           </motion.div>
         </div>
-      </motion.div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-cosmic-black via-cosmic-black/90 to-transparent z-30 pointer-events-none" />
+      </div>
     </section>
   )
 }

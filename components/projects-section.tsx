@@ -5,8 +5,9 @@ import { motion, useInView, AnimatePresence } from "framer-motion"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Float, Sphere, MeshDistortMaterial } from "@react-three/drei"
 import type * as THREE from "three"
-import { ExternalLink, Github, X } from "lucide-react"
+import { ExternalLink, Github } from "lucide-react"
 import { CosmicHazeDivider } from "./cosmic-haze-divider"
+import { Cross2Icon } from "@radix-ui/react-icons"
 
 const projects = [
   {
@@ -114,8 +115,8 @@ export function ProjectsSection() {
   return (
     <>
       <CosmicHazeDivider variant="orange" />
-      <section id="projects" ref={containerRef} className="relative py-32 z-10">
-        <div className="absolute inset-0 bg-cosmic-black/90" />
+      <section id="projects" ref={containerRef} className="relative py-32 z-[5]">
+        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm" />
 
         <div className="relative max-w-7xl mx-auto px-6">
           {/* Section Header */}
@@ -223,7 +224,7 @@ export function ProjectsSection() {
                   className="fixed md:absolute top-4 right-4 p-3 text-cosmic-white hover:text-cosmic-gold transition-colors bg-cosmic-black/90 rounded-full border border-cosmic-gold/30 hover:border-cosmic-gold/60"
                   style={{ zIndex: 1000000 }}
                 >
-                  <X size={24} />
+                  <Cross2Icon size={24} />
                 </button>
 
                 <div className="overflow-y-auto" style={{ maxHeight: "calc(100vh - 120px)" }}>

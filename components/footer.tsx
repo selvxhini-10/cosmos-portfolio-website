@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Github, Linkedin, Twitter, Mail, Sparkles } from "lucide-react"
+import { Github, Linkedin, Twitter, Sparkles, Mail } from "lucide-react"
+import { EnvelopeClosedIcon } from "@radix-ui/react-icons"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
