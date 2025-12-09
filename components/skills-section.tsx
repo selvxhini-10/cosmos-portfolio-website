@@ -70,7 +70,7 @@ function ConstellationNode({
         </mesh>
 
         {/* Core orb */}
-        <mesh ref={meshRef} onPointerEnter={() => onHover(node.id)} onPointerLeave={() => onHover(null)}>
+        <mesh ref={meshRef} onPointerOver={() => onHover(node.id)} onPointerOut={() => onHover(null)}>
           <sphereGeometry args={[0.12, 32, 32]} />
           <meshBasicMaterial color={node.color} transparent opacity={isHovered ? 1 : 0.9} />
         </mesh>
@@ -187,7 +187,7 @@ export function SkillsSection() {
     <>
       <CosmicHazeDivider variant="gold" />
       <section id="skills" ref={containerRef} className="relative py-32 z-[5]">
-        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 
         <div className="relative max-w-7xl mx-auto px-6">
           {/* Section Header */}
@@ -206,12 +206,17 @@ export function SkillsSection() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* 3D Constellation Network */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               className="h-[500px] relative"
+              style={{ willChange: 'opacity' }}
             >
-              <Canvas camera={{ position: [0, 0, 6], fov: 50 }}>
+              <Canvas 
+                camera={{ position: [0, 0, 6], fov: 50 }}
+                gl={{ antialias: false, powerPreference: "high-performance" }}
+                dpr={[1, 1.5]}
+              >
                 <ConstellationNetwork />
               </Canvas>
 
@@ -224,16 +229,18 @@ export function SkillsSection() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
               className="space-y-6"
+              style={{ willChange: 'transform, opacity' }}
             >
               {skillCategories.map((category, index) => (
                 <motion.div
                   key={category.title}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                  transition={{ duration: 0.4, delay: 0.4 + index * 0.05, ease: "easeOut" }}
                   className="p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl"
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   <h3 className="text-lg font-semibold text-cosmic-gold mb-4">{category.title}</h3>
                   <div className="flex flex-wrap gap-2">

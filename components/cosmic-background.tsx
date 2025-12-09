@@ -2,6 +2,135 @@
 
 import { useEffect, useRef } from "react"
 
+// Pure CSS Shooting Stars Component
+function ShootingStars() {
+  return (
+    <div className="shooting-stars-container">
+      {[...Array(10)].map((_, i) => (
+        <span key={i} className={`shooting-star shooting-star-${i + 1}`} />
+      ))}
+      <style jsx>{`
+        .shooting-stars-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+
+        .shooting-star {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 4px;
+          height: 4px;
+          background: #fff;
+          border-radius: 50%;
+          box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 0 0 0 8px rgba(255, 255, 255, 0.1),
+            0 0 20px rgba(255, 255, 255, 0.1);
+          animation: animate 3s linear infinite;
+        }
+
+        .shooting-star::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 300px;
+          height: 1px;
+          background: linear-gradient(90deg, #fff, transparent);
+        }
+
+        @keyframes animate {
+          0% {
+            transform: rotate(315deg) translateX(0);
+            opacity: 1;
+          }
+          70% {
+            opacity: 1;
+          }
+          100% {
+            transform: rotate(315deg) translateX(-1000px);
+            opacity: 0;
+          }
+        }
+
+        .shooting-star-1 {
+          top: 0;
+          right: 0;
+          left: initial;
+          animation-delay: 0s;
+          animation-duration: 1s;
+        }
+        .shooting-star-2 {
+          top: 0;
+          right: 80px;
+          left: initial;
+          animation-delay: 0.2s;
+          animation-duration: 3s;
+        }
+        .shooting-star-3 {
+          top: 80px;
+          right: 0px;
+          left: initial;
+          animation-delay: 0.4s;
+          animation-duration: 2s;
+        }
+        .shooting-star-4 {
+          top: 0;
+          right: 180px;
+          left: initial;
+          animation-delay: 0.6s;
+          animation-duration: 1.5s;
+        }
+        .shooting-star-5 {
+          top: 0;
+          right: 400px;
+          left: initial;
+          animation-delay: 0.8s;
+          animation-duration: 2.5s;
+        }
+        .shooting-star-6 {
+          top: 0;
+          right: 600px;
+          left: initial;
+          animation-delay: 1s;
+          animation-duration: 3s;
+        }
+        .shooting-star-7 {
+          top: 300px;
+          right: 0px;
+          left: initial;
+          animation-delay: 1.2s;
+          animation-duration: 1.75s;
+        }
+        .shooting-star-8 {
+          top: 0px;
+          right: 700px;
+          left: initial;
+          animation-delay: 1.4s;
+          animation-duration: 1.25s;
+        }
+        .shooting-star-9 {
+          top: 0px;
+          right: 1000px;
+          left: initial;
+          animation-delay: 0.75s;
+          animation-duration: 2.25s;
+        }
+        .shooting-star-10 {
+          top: 0px;
+          right: 450px;
+          left: initial;
+          animation-delay: 2.75s;
+          animation-duration: 2.75s;
+        }
+      `}</style>
+    </div>
+  )
+}
+
 // Particle displacement shader with WebGL
 const vertexShaderSource = `
   attribute vec2 a_position;
@@ -44,17 +173,6 @@ const fragmentShaderSource = `
     vec2 particleCenter = vec2(0.5) + (uv - mouse) * displacement * 2.0;
     float particleDist = length(frac - particleCenter);
     
-    // Animated stars moving across screen
-    float movingStar = 0.0;
-    for(float i = 0.0; i < 5.0; i++) {
-      vec2 starPos = vec2(
-        mod(u_time * 0.05 + i * 0.2 + particleRandom, 1.0),
-        mod(uv.y + i * 0.15 + particleRandom * 0.5, 1.0)
-      );
-      float starDist = distance(uv, starPos);
-      movingStar += smoothstep(0.008, 0.0, starDist) * (0.5 + particleRandom * 0.5);
-    }
-    
     // Static particle glow
     float particle = smoothstep(0.15, 0.0, particleDist) * (0.3 + particleRandom * 0.4);
     
@@ -66,7 +184,7 @@ const fragmentShaderSource = `
     }
     
     // Combine effects
-    float brightness = particle + movingStar + constellation;
+    float brightness = particle + constellation;
     vec3 color = mix(
       vec3(1.0, 0.95, 0.9),  // Warm white
       vec3(1.0, 0.7, 0.4),   // Golden orange
@@ -77,21 +195,9 @@ const fragmentShaderSource = `
   }
 `
 
-interface Particle {
-  x: number
-  y: number
-  vx: number
-  vy: number
-  size: number
-  opacity: number
-  hue: number
-}
-
 export function CosmicBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
   const glCanvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef({ x: 0, y: 0 })
-  const particlesRef = useRef<Particle[]>([])
 
   // WebGL particle displacement effect
   useEffect(() => {
@@ -184,64 +290,6 @@ export function CosmicBackground() {
     }
   }, [])
 
-  // Canvas 2D for additional animated stars
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext("2d")!
-
-    // Initialize shooting stars
-    const createShootingStar = (): Particle => ({
-      x: Math.random() * canvas.width,
-      y: -20,
-      vx: (Math.random() - 0.5) * 2,
-      vy: Math.random() * 3 + 2,
-      size: Math.random() * 2 + 1,
-      opacity: 1,
-      hue: Math.random() * 60 + 30, // Gold to orange range
-    })
-
-    for (let i = 0; i < 50; i++) {
-      particlesRef.current.push(createShootingStar())
-    }
-
-    let raf: number
-    const animate = () => {
-      canvas.width = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      // Update and draw particles
-      particlesRef.current.forEach((particle, index) => {
-        particle.x += particle.vx
-        particle.y += particle.vy
-        particle.opacity -= 0.003
-
-        // Reset particle if off-screen
-        if (particle.y > canvas.height || particle.opacity <= 0) {
-          particlesRef.current[index] = createShootingStar()
-          return
-        }
-
-        // Draw particle with trail
-        ctx.save()
-        ctx.globalAlpha = particle.opacity
-        const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size * 3)
-        gradient.addColorStop(0, `hsla(${particle.hue}, 100%, 70%, 0.8)`)
-        gradient.addColorStop(1, `hsla(${particle.hue}, 100%, 50%, 0)`)
-        ctx.fillStyle = gradient
-        ctx.fillRect(particle.x - particle.size * 3, particle.y - particle.size * 3, particle.size * 6, particle.size * 6)
-        ctx.restore()
-      })
-
-      raf = requestAnimationFrame(animate)
-    }
-    animate()
-
-    return () => cancelAnimationFrame(raf)
-  }, [])
-
   // Mouse tracking
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -255,8 +303,8 @@ export function CosmicBackground() {
     <div className="absolute inset-0 w-full h-full pointer-events-none">
       {/* WebGL particle displacement layer */}
       <canvas ref={glCanvasRef} className="absolute inset-0 w-full h-full" style={{ mixBlendMode: "screen" }} />
-      {/* Canvas 2D shooting stars layer */}
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ mixBlendMode: "screen" }} />
+      {/* CSS Shooting stars layer */}
+      <ShootingStars />
     </div>
   )
 }

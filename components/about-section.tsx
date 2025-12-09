@@ -19,18 +19,39 @@ export function AboutSection() {
 
   return (
     <>
-      <CosmicHazeDivider variant="orange" />
+      
       <section id="about" ref={containerRef} className="relative py-32 z-[5]">
+        {/* Gradient fade at top */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent z-20" />
+        
+        {/* Black Hole Video Background */}
+        <div className="absolute top-0 right-0 w-full md:w-3/4 lg:w-2/3 h-[600px] md:h-[800px] -z-10 overflow-hidden">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="absolute top-0 right-0 w-full h-full object-cover opacity-60"
+          >
+            <source src="/blackhole.mp4" type="video/mp4" />
+          </video>
+          {/* Gradient overlay to blend with background */}
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-cosmic-black/50 to-cosmic-black" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cosmic-black/30 to-cosmic-black" />
+        </div>
+        
         {/* Section Background */}
-        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-20" />
 
         <div className="relative max-w-6xl mx-auto px-6">
           {/* Terminal Header */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="mb-16"
+            style={{ willChange: 'transform, opacity' }}
           >
             <div className="inline-block">
               <div className="flex items-center gap-2 mb-2">
@@ -45,7 +66,8 @@ export function AboutSection() {
                   <span className="animate-pulse">_</span> Initializing transmission...
                 </div>
                 <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white mb-2">
-                  SIGNAL <span className="text-gradient-red-gold animate-text-glow-gradient">RECEIVED</span>
+                  <span className="font-mono">SIGNAL </span>
+                  <span className="text-gradient-red-gold animate-text-glow-gradient font-mono">RECEIVED</span>
                 </h2>
                 <p className="text-cosmic-white/60 font-mono text-sm">
                   {">> Origin: Earth | Sector: Developer Quadrant | Status: Active"}
@@ -59,7 +81,8 @@ export function AboutSection() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+              style={{ willChange: 'transform, opacity' }}
             >
               <div className="space-y-6 text-cosmic-white/80 leading-relaxed">
                 <p className="text-lg">

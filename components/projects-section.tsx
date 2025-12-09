@@ -116,7 +116,7 @@ export function ProjectsSection() {
     <>
       <CosmicHazeDivider variant="orange" />
       <section id="projects" ref={containerRef} className="relative py-32 z-[5]">
-        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 
         <div className="relative max-w-7xl mx-auto px-6">
           {/* Section Header */}

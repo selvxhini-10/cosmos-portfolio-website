@@ -34,22 +34,21 @@ export function HeroSection() {
       onMouseMove={handleMouseMove}
       className="relative min-h-screen flex flex-col overflow-hidden z-[5]"
     >
-      {/* Background Video with Parallax */}
-      <motion.div style={{ y }} className="absolute inset-0 z-0">
+      {/* Background Video - Static */}
+      <div className="absolute inset-0 z-0">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-200"
-          style={{
-            transform: `translate(${mousePosition.x * 15}px, ${mousePosition.y * 15}px) scale(1.1)`,
-          }}
+          className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-cosmic-black/30" />
-      </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black/70 via-cosmic-black/60 to-cosmic-black/80" />
+        {/* Fade to black at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cosmic-black via-cosmic-black/80 to-transparent" />
+      </div>
 
       {/* Main Content */}
       <div className="relative z-20 flex-1 flex flex-col px-6 max-w-5xl mx-auto w-full">
@@ -165,7 +164,7 @@ export function HeroSection() {
               transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
               className="flex flex-col items-center gap-2 text-cosmic-white/50"
             >
-              <span className="text-xs tracking-[0.3em] uppercase">Scroll to Explore</span>
+              <span className="text-xs text-cosmic-white/90 tracking-[0.3em] uppercase">Scroll to Explore</span>
               <ChevronDownIcon className="w-6 h-6" />
             </motion.div>
           </motion.div>

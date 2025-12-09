@@ -30,7 +30,7 @@ export function ContactSection() {
     <>
       <CosmicHazeDivider variant="red" />
       <section id="contact" ref={containerRef} className="relative py-32 z-[5]">
-        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 
         {/* Nebula glow effect */}
         <div className="absolute inset-0 pointer-events-none">
@@ -42,33 +42,80 @@ export function ContactSection() {
           />
         </div>
 
-        <div className="relative max-w-6xl mx-auto px-6">
-          {/* Section Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <span className="text-cosmic-gold/60 text-sm tracking-[0.3em] uppercase">Transmission Channel</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white mt-2">
-              ESTABLISH <span className="text-gradient-red-gold animate-text-glow-gradient">CONTACT</span>
-            </h2>
-            <p className="mt-4 text-cosmic-white/60 max-w-xl mx-auto">
-              Ready to embark on a new mission? Send a signal through the void and let's create something extraordinary
-              together.
-            </p>
-          </motion.div>
+        <div className="relative max-w-7xl mx-auto px-6">
+          {/* Section Header with UFO - Side by Side Layout */}
+          <div className="grid lg:grid-cols-2 gap-8 items-center mb-16">
+            {/* Left: Title and Description */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="space-y-6"
+              style={{ willChange: 'transform, opacity' }}
+            >
+              <div>
+                <span className="text-cosmic-gold/60 text-sm tracking-[0.3em] uppercase">Transmission Channel</span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-cosmic-white mt-2">
+                  ESTABLISH <span className="text-gradient-red-gold animate-text-glow-gradient">CONTACT</span>
+                </h2>
+                <p className="mt-6 text-cosmic-white/60 text-lg leading-relaxed">
+                  Ready to embark on a new mission? Send a signal through the void and let's create something extraordinary
+                  together.
+                </p>
+              </div>
+              
+              {/* Terminal Status */}
+              <div className="p-4 border border-cosmic-gold/20 rounded-lg bg-cosmic-black/80 font-mono text-sm backdrop-blur-xl">
+                <div className="text-cosmic-gold">$ establishing_secure_connection...</div>
+                <div className="text-cosmic-white/50 mt-1">{">> Signal strength: Strong"}</div>
+                <div className="text-cosmic-white/50">{">> Encryption: Active"}</div>
+                <div className="text-cosmic-gold mt-2 animate-pulse">{">> Awaiting transmission..."}</div>
+              </div>
+            </motion.div>
+
+            {/* Right: 3D UFO Model */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              className="relative"
+              style={{ willChange: 'transform, opacity' }}
+            >
+              <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden border border-cosmic-gold/20 bg-cosmic-black/30 backdrop-blur-xl">
+                <iframe
+                  src="https://my.spline.design/wobblingufo-ySqXpohF9mMFVNzbvw4oYbSU/"
+                  frameBorder="0"
+                  width="100%"
+                  height="100%"
+                  className="w-full h-full relative z-60"
+                  title="3D Wobbling UFO Model"
+                  loading="lazy"
+                />
+              </div>
+              {/* Glow effect around UFO container */}
+              <div className="absolute inset-0 -z-10 blur-3xl opacity-30">
+                <div className="absolute inset-0 bg-gradient-to-r from-cosmic-gold via-cosmic-orange to-cosmic-gold animate-pulse" />
+              </div>
+            </motion.div>
+          </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
               className="space-y-8"
+              style={{ willChange: 'transform, opacity' }}
             >
-              <div className="p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl">
+              <motion.div 
+                whileTap={{ scale: 0.98 }}
+                whileHover={{ 
+                  borderColor: "rgba(255, 180, 100, 0.5)",
+                  boxShadow: "0 0 30px rgba(255, 180, 100, 0.3)"
+                }}
+                className="p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl transition-all duration-300 cursor-pointer"
+              >
                 <h3 className="text-xl font-semibold text-cosmic-white mb-6">Signal Coordinates</h3>
 
                 <div className="space-y-4">
@@ -92,9 +139,16 @@ export function ContactSection() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl">
+              <motion.div 
+                whileTap={{ scale: 0.98 }}
+                whileHover={{ 
+                  borderColor: "rgba(255, 180, 100, 0.5)",
+                  boxShadow: "0 0 30px rgba(255, 180, 100, 0.3)"
+                }}
+                className="p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl transition-all duration-300 cursor-pointer"
+              >
                 <h3 className="text-xl font-semibold text-cosmic-white mb-6">Communication Links</h3>
 
                 <div className="flex gap-4">
@@ -114,21 +168,15 @@ export function ContactSection() {
                     </motion.a>
                   ))}
                 </div>
-              </div>
-
-              <div className="p-4 border border-cosmic-gold/20 rounded-lg bg-cosmic-black/80 font-mono text-sm">
-                <div className="text-cosmic-gold">$ establishing_secure_connection...</div>
-                <div className="text-cosmic-white/50 mt-1">{">> Signal strength: Strong"}</div>
-                <div className="text-cosmic-white/50">{">> Encryption: Active"}</div>
-                <div className="text-cosmic-gold mt-2 animate-pulse">{">> Awaiting transmission..."}</div>
-              </div>
+              </motion.div>
             </motion.div>
 
             {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
+              style={{ willChange: 'transform, opacity' }}
             >
               <form
                 onSubmit={handleSubmit}

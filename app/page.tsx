@@ -6,6 +6,7 @@ import { AboutSection } from "@/components/about-section"
 import { ExperienceSection } from "@/components/experience-section"
 import { ProjectsSection } from "@/components/projects-section"
 import { SkillsSection } from "@/components/skills-section"
+import { BlogSection } from "@/components/blog-section"
 import { ContactSection } from "@/components/contact-section"
 import { Navigation } from "@/components/navigation"
 import { CosmicBackground } from "@/components/cosmic-background"
@@ -21,8 +22,8 @@ export default function Home() {
     <SmoothScroll>
       <main className="relative min-h-screen overflow-x-hidden">
         {/* Cosmic Background Layer - visible behind all content */}
-          <div className="fixed inset-0 z-11">
-            <CosmicBackground />
+        <div className="fixed inset-0 z-[5] pointer-events-none">
+          <CosmicBackground />
         </div>
 
         {/* Content Layer */}
@@ -33,6 +34,7 @@ export default function Home() {
           <ExperienceSection />
           <ProjectsSection />
           <SkillsSection />
+          <BlogSection />
           <ContactSection />
           <Footer />
         </div>
