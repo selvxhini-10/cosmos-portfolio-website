@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 
 interface CosmicHazeDividerProps {
-  variant?: "orange" | "gold" | "red" | "mixed"
+  variant?: "orange" | "gold" | "red" | "blue" | "mixed"
   className?: string
 }
 

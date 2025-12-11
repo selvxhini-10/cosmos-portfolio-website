@@ -15,7 +15,7 @@ export function Footer() {
   ]
 
   return (
-    <footer className="relative z-20 border-t border-cosmic-gold/20 bg-cosmic-black/60 backdrop-blur-sm">
+    <footer className="relative z-[1] border-t border-cosmic-gold/20 bg-cosmic-black/60 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}

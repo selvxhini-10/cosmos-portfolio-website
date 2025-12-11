@@ -224,7 +224,7 @@ export function ProjectsSection() {
                   className="fixed md:absolute top-4 right-4 p-3 text-cosmic-white hover:text-cosmic-gold transition-colors bg-cosmic-black/90 rounded-full border border-cosmic-gold/30 hover:border-cosmic-gold/60"
                   style={{ zIndex: 1000000 }}
                 >
-                  <Cross2Icon size={24} />
+                  <Cross2Icon className="w-6 h-6" />
                 </button>
 
                 <div className="overflow-y-auto" style={{ maxHeight: "calc(100vh - 120px)" }}>

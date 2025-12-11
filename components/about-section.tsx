@@ -94,11 +94,7 @@ export function AboutSection() {
                   countless technologies, from the familiar territories of React and Node.js to the uncharted depths of
                   machine learning and AI.
                 </p>
-                <p>
-                  Like the explorers who venture beyond the event horizon, I believe in taking calculated risks to
-                  discover new possibilities. Every project is a new mission, every bug is an asteroid field to
-                  navigate, and every successful deployment is a new world conquered.
-                </p>
+             
               </div>
 
               <motion.div

@@ -27,6 +27,17 @@ const experiences = [
     color: "#4060ff",
     logo: "https://placehold.co/80x80/1E40AF/ffffff?text=BEQ",
   },
+  {
+    id: "3",
+    title: "Fullstack Web Developer",
+    company: "BrandEQ Group",
+    date: "Jul. 2022 - Sep. 2022",
+    description:
+      "Enhanced SEO by implementing WCAG 2.0 accessibility standards and deployed an interactive 3D model using Three.js and React Three Fiber, successfully completing the project under tight timeline constraints",
+    tech: ["Collaboration", "Problem-Solving", "Communication"],
+    color: "#4060ff",
+    logo: "https://placehold.co/80x80/1E40AF/ffffff?text=BEQ",
+  },
 ]
 
 function FloatingStars() {

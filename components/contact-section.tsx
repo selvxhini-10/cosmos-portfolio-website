@@ -7,6 +7,7 @@ import { motion, useInView } from "framer-motion"
 import { MapPin, Github, Linkedin, Twitter } from "lucide-react"
 import { CosmicHazeDivider } from "./cosmic-haze-divider"
 import { PaperPlaneIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons"
+import Spline from '@splinetool/react-spline'
 
 export function ContactSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -29,7 +30,7 @@ export function ContactSection() {
   return (
     <>
       <CosmicHazeDivider variant="red" />
-      <section id="contact" ref={containerRef} className="relative py-32 z-[5]">
+      <section id="contact" ref={containerRef} className="relative py-32 z-[1]">
         <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 
         {/* Nebula glow effect */}
@@ -82,19 +83,10 @@ export function ContactSection() {
               style={{ willChange: 'transform, opacity' }}
             >
               <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden border border-cosmic-gold/20 bg-cosmic-black/30 backdrop-blur-xl">
-                <iframe
-                  src="https://my.spline.design/wobblingufo-ySqXpohF9mMFVNzbvw4oYbSU/"
-                  frameBorder="0"
-                  width="100%"
-                  height="100%"
-                  className="w-full h-full relative z-60"
-                  title="3D Wobbling UFO Model"
-                  loading="lazy"
+                <Spline
+                  scene="https://prod.spline.design/bRYq5NjKXuiOAAG8/scene.splinecode"
+                  className="w-full h-full"
                 />
-              </div>
-              {/* Glow effect around UFO container */}
-              <div className="absolute inset-0 -z-10 blur-3xl opacity-30">
-                <div className="absolute inset-0 bg-gradient-to-r from-cosmic-gold via-cosmic-orange to-cosmic-gold animate-pulse" />
               </div>
             </motion.div>
           </div>

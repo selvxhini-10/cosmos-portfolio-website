@@ -37,7 +37,7 @@ export function BlogSection() {
   return (
     <>
       <CosmicHazeDivider />
-      <section id="blog" ref={containerRef} className="relative py-32 z-[5]">
+      <section id="blog" ref={containerRef} className="relative py-32 z-[1]">
         {/* Section Background */}
         <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 
