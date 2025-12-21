@@ -5,7 +5,6 @@ import type React from "react"
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
 import { MapPin, Github, Linkedin, Twitter } from "lucide-react"
-import { CosmicHazeDivider } from "./cosmic-haze-divider"
 import { PaperPlaneIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons"
 import Spline from '@splinetool/react-spline'
 
@@ -29,7 +28,6 @@ export function ContactSection() {
 
   return (
     <>
-      <CosmicHazeDivider variant="red" />
       <section id="contact" ref={containerRef} className="relative py-32 z-[1]">
         <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 
@@ -75,20 +73,30 @@ export function ContactSection() {
             </motion.div>
 
             {/* Right: 3D UFO Model */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="relative"
-              style={{ willChange: 'transform, opacity' }}
-            >
-              <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px] rounded-2xl overflow-hidden border border-cosmic-gold/20 bg-cosmic-black/30 backdrop-blur-xl">
-                <Spline
-                  scene="https://prod.spline.design/bRYq5NjKXuiOAAG8/scene.splinecode"
-                  className="w-full h-full"
-                />
-              </div>
-            </motion.div>
+          <motion.div
+  initial={{ opacity: 0, x: 50 }}
+  animate={isInView ? { opacity: 1, x: 0 } : {}}
+  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+  className="relative"
+>
+  {/* Height-defined interaction zone */}
+  <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px]">
+    
+    {/* Spline UFO */}
+    <Spline
+      scene="https://prod.spline.design/bRYq5NjKXuiOAAG8/scene.splinecode"
+      className="absolute inset-0 w-full h-full"
+    />
+
+    {/* Edge fade for blending */}
+    <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" />
+    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-cosmic-black to-transparent pointer-events-none" />
+
+    {/* Optional subtle glow */}
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,140,80,0.15),transparent_60%)] pointer-events-none" />
+  </div>
+</motion.div>
+
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">

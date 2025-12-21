@@ -5,7 +5,6 @@ import { motion, useInView } from "framer-motion"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Line, Html, Float } from "@react-three/drei"
 import * as THREE from "three"
-import { CosmicHazeDivider } from "./cosmic-haze-divider"
 
 const skillNodes = [
   { id: "tf", name: "TensorFlow", color: "#ff6f00", position: [-2.5, 1.5, 0] as [number, number, number] },
@@ -185,7 +184,6 @@ export function SkillsSection() {
 
   return (
     <>
-      <CosmicHazeDivider variant="gold" />
       <section id="skills" ref={containerRef} className="relative py-32 z-[1]">
         <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 

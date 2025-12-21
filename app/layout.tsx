@@ -8,7 +8,7 @@ const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-cinzel" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
 export const metadata: Metadata = {
-  title: "Explorer Portfolio | Beyond the Event Horizon",
+  title: "Selvahini Kamalarajan",
   description:
     "A cinematic developer portfolio inspired by Interstellar, featuring 3D elements, parallax backgrounds, and cosmic exploration themes.",
   generator: "v0.app",

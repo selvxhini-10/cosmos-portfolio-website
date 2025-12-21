@@ -20,12 +20,7 @@ export default function Home() {
   const [cosmicIntensity, setCosmicIntensity] = useState(100)
 
   return (
-    <SmoothScroll>
       <main className="relative min-h-screen overflow-x-hidden">
-        {/* Cosmic Background Layer - visible behind all content */}
-        <div className="fixed inset-0 z-[5] pointer-events-none">
-          <CosmicBackground />
-        </div>
 
         {/* Content Layer */}
         <div className="relative z-10">
@@ -33,8 +28,8 @@ export default function Home() {
           <HeroSection />
           <AboutSection />
           <SkillsSection />
-          <ExperienceSection />
           <ProjectsSection />
+          <ExperienceSection />
           <LeadershipSection />
           <BlogSection />
           <ContactSection />
@@ -43,6 +38,5 @@ export default function Home() {
 
         {/* Controls Layer - always on top */}
       </main>
-    </SmoothScroll>
   )
 }

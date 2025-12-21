@@ -3,8 +3,9 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { BookOpen, ArrowRight, Calendar, Clock } from "lucide-react"
-import { CosmicHazeDivider } from "./cosmic-haze-divider"
 import Link from "next/link"
+import Spline from '@splinetool/react-spline'
+
 
 const featuredArticles = [
   {
@@ -36,8 +37,7 @@ export function BlogSection() {
 
   return (
     <>
-      <CosmicHazeDivider />
-      <section id="blog" ref={containerRef} className="relative py-32 z-[1]">
+      <section id="blog" ref={containerRef} className="relative z-[1]">
         {/* Section Background */}
         <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 
@@ -73,45 +73,45 @@ export function BlogSection() {
           </motion.div>
 
           {/* 3D Brain Model - Center Piece */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="relative mb-20"
-            style={{ willChange: 'opacity' }}
-          >
-            <div className="relative w-full h-[400px] md:h-[600px] rounded-2xl overflow-hidden border border-cosmic-gold/20 bg-cosmic-black/50 backdrop-blur-xl">
-              <iframe
-                src="https://my.spline.design/particleaibrain-Muif91xEvdINiY9GGmaeZ7hn/"
-                frameBorder="0"
-                width="100%"
-                height="100%"
-                className="w-full h-full relative z-10"
-                title="3D AI Brain Model"
-                loading="lazy"
-              />
-              {/* Overlay gradient for better text visibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-black/60 via-transparent to-transparent pointer-events-none" />
-              
-              {/* Floating text overlay */}
-              <div className="absolute bottom-8 left-8 right-8 pointer-events-none">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                  className="text-center"
-                >
-                  <h3 className="text-2xl md:text-3xl font-bold text-cosmic-white mb-2">
-                    Exploring the Intersection of{" "}
-                    <span className="text-gradient-red-gold">Code & Consciousness</span>
-                  </h3>
-                  <p className="text-cosmic-white/70 text-sm md:text-base">
-                    Deep dives into technology, development, and digital innovation
-                  </p>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
+<motion.div
+  initial={{ opacity: 0 }}
+  animate={isInView ? { opacity: 1 } : {}}
+  transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+  className="relative mb-20"
+>
+  {/* Height-defined interaction zone */}
+  <div className="relative w-full h-[400px] md:h-[600px]">
+    
+    {/* Spline Canvas */}
+    <Spline
+      scene="https://prod.spline.design/BNf8gJfjxTOH9jNT/scene.splinecode"
+      className="absolute inset-0 w-full h-full"
+    />
+
+    {/* Edge blending (NO pointer blocking) */}
+    <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" />
+    <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cosmic-black via-cosmic-black/60 to-transparent pointer-events-none" />
+
+    {/* Floating text overlay — unchanged */}
+    <div className="absolute bottom-8 left-8 right-8 pointer-events-none">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="text-center"
+      >
+        <h3 className="text-2xl md:text-3xl font-bold text-cosmic-white mb-2">
+          Exploring the Intersection of{" "}
+          <span className="text-gradient-red-gold">Code & Consciousness</span>
+        </h3>
+        <p className="text-cosmic-white/70 text-sm md:text-base">
+          Deep dives into technology, development, and digital innovation
+        </p>
+      </motion.div>
+    </div>
+  </div>
+</motion.div>
+
 
           {/* Featured Articles Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">

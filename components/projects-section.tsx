@@ -6,7 +6,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Float, Sphere, MeshDistortMaterial } from "@react-three/drei"
 import type * as THREE from "three"
 import { ExternalLink, Github } from "lucide-react"
-import { CosmicHazeDivider } from "./cosmic-haze-divider"
 import { Cross2Icon } from "@radix-ui/react-icons"
 
 const projects = [
@@ -114,7 +113,6 @@ export function ProjectsSection() {
 
   return (
     <>
-      <CosmicHazeDivider variant="orange" />
       <section id="projects" ref={containerRef} className="relative py-32 z-[5]">
         <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 

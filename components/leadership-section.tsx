@@ -3,8 +3,7 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Users, Sparkles, Heart, GraduationCap } from "lucide-react"
-import { CosmicHazeDivider } from "./cosmic-haze-divider"
-import Spline from '@splinetool/react-spline'
+import Spline from "@splinetool/react-spline"
 
 const initiatives = [
   {
@@ -35,75 +34,74 @@ const initiatives = [
 
 export function LeadershipSection() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" })
+  const isInView = useInView(containerRef, { once: true, margin: "-120px" })
 
   return (
-    <>
-      <CosmicHazeDivider variant="blue" />
-      <section id="leadership" ref={containerRef} className="relative py-32 z-[1]">
-        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
+    <section id="leadership" className="relative py-32 overflow-hidden">
+  {/* Section Background */}
+  <div className="absolute inset-0 bg-cosmic-black/60 -z-20" />
 
-        <div className="relative max-w-7xl mx-auto px-6">
-        
-          {/* 3D Robot Model with Centered Overlay Text */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="relative text-center mb-16"
-            style={{ willChange: 'opacity' }}
-          >
-            <span className="text-cosmic-gold/60 text-sm tracking-[0.3em] uppercase">Community Impact</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white mt-2">
-              LEADERSHIP & <span className="text-gradient-red-gold animate-text-glow-gradient">MENTORSHIP</span>
-            </h2>
-            <div className="relative w-full h-[400px] md:h-[600px] rounded-2xl overflow-hidden border border-cosmic-gold/20 bg-cosmic-black/30 backdrop-blur-xl">
-              <Spline
-                scene="https://prod.spline.design/cxk6FWHBLJBTmXfI/scene.splinecode"
-                className="w-full h-full"
-              />
-              {/* Overlay gradient for better text visibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-black/60 via-transparent to-transparent pointer-events-none" />
-            </div>
-          </motion.div>
+  <div className="relative max-w-7xl mx-auto px-6">
+    
+    {/* Header */}
+    <div className="text-center mb-12">
+      <span className="text-cosmic-gold/60 text-sm tracking-[0.3em] uppercase">
+        Community Impact
+      </span>
+      <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white mt-2">
+        LEADERSHIP &{" "}
+        <span className="text-gradient-red-gold animate-text-glow-gradient">
+          MENTORSHIP
+        </span>
+      </h2>
+    </div>
 
-          {/* Initiatives Grid - 4 Inline Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {initiatives.map((initiative, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: 0.3 + index * 0.05, ease: "easeOut" }}
-                className="group"
-                style={{ willChange: 'transform, opacity' }}
-              >
-                <div className="h-full p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl hover:border-cosmic-gold/40 hover:shadow-[0_0_20px_rgba(255,180,100,0.2)] transition-all duration-300">
-                  {/* Icon */}
-                  <div className="mb-4">
-                    <div className="w-12 h-12 rounded-lg border border-cosmic-gold/30 flex items-center justify-center group-hover:border-cosmic-gold/50 transition-colors duration-300">
-                      <initiative.icon className="w-6 h-6 text-cosmic-gold" />
-                    </div>
-                  </div>
+    {/* ───────── INTERACTIVE MODEL ZONE ───────── */}
+    <div className="relative w-full h-[420px] md:h-[560px] mb-20">
+      
+      {/* Spline Canvas (interactive) */}
+      <Spline
+        scene="https://prod.spline.design/cxk6FWHBLJBTmXfI/scene.splinecode"
+        className="absolute inset-0 w-full h-full"
+      />
 
-                  {/* Content */}
-                  <h3 className="text-lg font-bold text-cosmic-white mb-2 group-hover:text-cosmic-gold transition-colors duration-300">
-                    {initiative.title}
-                  </h3>
+      {/* Edge blending ONLY (no pointer blocking) */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cosmic-black to-transparent pointer-events-none" />
 
-                  <p className="text-sm text-cosmic-white/60 leading-relaxed mb-4">{initiative.description}</p>
+      {/* Optional subtle glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,140,80,0.12),transparent_65%)] pointer-events-none" />
+    </div>
 
-                  {/* Impact Badge */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cosmic-gold/10 border border-cosmic-gold/30">
-                    <Sparkles className="w-3 h-3 text-cosmic-gold" />
-                    <span className="text-xs font-semibold text-cosmic-gold">{initiative.impact}</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+    {/* ───────── INITIATIVES (CONTENT ZONE) ───────── */}
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {initiatives.map((initiative, index) => (
+        <div
+          key={index}
+          className="group rounded-xl p-6 border border-cosmic-gold/20 bg-cosmic-black/60 backdrop-blur-md transition-all hover:border-cosmic-gold/40 hover:shadow-[0_0_25px_rgba(255,140,80,0.25)]"
+        >
+          <div className="w-12 h-12 mb-4 rounded-lg border border-cosmic-gold/40 flex items-center justify-center">
+            <initiative.icon className="w-6 h-6 text-cosmic-gold" />
+          </div>
+
+          <h3 className="text-lg font-bold text-cosmic-white mb-2 group-hover:text-cosmic-gold">
+            {initiative.title}
+          </h3>
+
+          <p className="text-sm text-cosmic-white/70 mb-4">
+            {initiative.description}
+          </p>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cosmic-gold/10 border border-cosmic-gold/30">
+            <span className="text-xs font-semibold text-cosmic-gold">
+              {initiative.impact}
+            </span>
           </div>
         </div>
-      </section>
-    </>
+      ))}
+    </div>
+  </div>
+</section>
+
   )
 }

@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer"
 import { CosmicBackground } from "@/components/cosmic-background"
 import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react"
 import Link from "next/link"
+import Spline from '@splinetool/react-spline' 
 
 const blogPosts = [
   {
@@ -115,36 +116,41 @@ export default function BlogPage() {
             </motion.div>
 
             {/* 3D Brain Model Header */}
-            <div className="relative w-full h-[400px] md:h-[500px] mb-12 rounded-2xl overflow-hidden border border-cosmic-gold/20 bg-cosmic-black/50 backdrop-blur-xl">
-              <iframe
-                src="https://my.spline.design/particleaibrain-Muif91xEvdINiY9GGmaeZ7hn/"
-                frameBorder="0"
-                width="100%"
-                height="100%"
-                className="w-full h-full"
-                title="3D AI Brain Model"
-              />
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-black/80 via-transparent to-transparent pointer-events-none" />
-              
-              {/* Title overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-8 pointer-events-none">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="max-w-3xl"
-                >
-                  <h1 className="text-4xl md:text-6xl font-bold text-cosmic-white mb-4">
-                    <span className="font-mono">BLOG </span>
-                    <span className="text-gradient-red-gold animate-text-glow-gradient font-mono">ARCHIVE</span>
-                  </h1>
-                  <p className="text-cosmic-white/70 text-lg md:text-xl font-mono">
-                    {">> Transmissions from the code frontier"}
-                  </p>
-                </motion.div>
-              </div>
-            </div>
+<div className="relative w-full h-[400px] md:h-[500px] mb-12">
+  
+  {/* Spline Brain — interactive, no box */}
+  <Spline
+    scene="https://prod.spline.design/BNf8gJfjxTOH9jNT/scene.splinecode"
+    className="absolute inset-0 w-full h-full"
+  />
+
+  {/* Edge fade: top */}
+  <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" />
+
+  {/* Edge fade: bottom */}
+  <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cosmic-black/90 via-cosmic-black/60 to-transparent pointer-events-none" />
+
+  {/* Title overlay — UNCHANGED */}
+  <div className="absolute bottom-0 left-0 right-0 p-8 pointer-events-none">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.3 }}
+      className="max-w-3xl"
+    >
+      <h1 className="text-4xl md:text-6xl font-bold text-cosmic-white mb-4">
+        <span className="font-mono">BLOG </span>
+        <span className="text-gradient-red-gold animate-text-glow-gradient font-mono">
+          ARCHIVE
+        </span>
+      </h1>
+      <p className="text-cosmic-white/70 text-lg md:text-xl font-mono">
+        {">> Transmissions from the code frontier"}
+      </p>
+    </motion.div>
+  </div>
+</div>
+
 
             {/* Category Filter */}
             <motion.div

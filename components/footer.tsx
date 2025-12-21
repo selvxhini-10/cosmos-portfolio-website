@@ -25,8 +25,7 @@ export function Footer() {
             viewport={{ once: true }}
             className="flex items-center gap-2 text-xl font-bold text-cosmic-gold"
           >
-            <Sparkles className="w-5 h-5" />
-            <span>PORTFOLIO</span>
+            <span>Selvahini Kamalarajan</span>
           </motion.div>
 
           {/* Social Links */}
