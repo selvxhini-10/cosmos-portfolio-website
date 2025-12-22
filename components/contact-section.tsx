@@ -28,7 +28,7 @@ export function ContactSection() {
 
   return (
     <>
-      <section id="contact" ref={containerRef} className="relative py-32 z-[1]">
+      <section id="contact" ref={containerRef} className="relative py-24 z-[1]">
         <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 
         {/* Nebula glow effect */}

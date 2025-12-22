@@ -1,44 +1,19 @@
 "use client"
 
 import type React from "react"
-import { useRef, useState, useCallback, useEffect } from "react"
+import { useRef} from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Github, Linkedin, Mail } from "lucide-react"
 import { ChevronDownIcon } from "@radix-ui/react-icons"
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isClient, setIsClient] = useState(false)
-
-  // Fix hydration by ensuring client-side only rendering for certain features
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isClient) return
-    const { clientX, clientY } = e
-    const { innerWidth, innerHeight } = window
-    setMousePosition({
-      x: (clientX / innerWidth - 0.5) * 2,
-      y: (clientY / innerHeight - 0.5) * 2,
-    })
-  }, [isClient])
 
   return (
     <section
       id="home"
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex flex-col overflow-hidden z-[5]"
+      className="relative min-h-screen flex flex-col overflow-hidden"
     >
       {/* Background Video - Optimized */}
       <div className="absolute inset-0 z-0">
@@ -47,18 +22,17 @@ export function HeroSection() {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black/70 via-cosmic-black/60 to-cosmic-black/80" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cosmic-black via-cosmic-black/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black/70 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-cosmic-black to-transparent" />
       </div>
 
       {/* Main Content */}
-      <div className="relative z-20 flex-1 flex flex-col px-6 max-w-6xl mx-auto w-full">
+      <div className="relative z-10 flex-1 flex flex-col px-6 max-w-6xl mx-auto w-full">
         <div className="pt-28 md:pt-32">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

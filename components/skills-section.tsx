@@ -184,7 +184,7 @@ export function SkillsSection() {
 
   return (
     <>
-      <section id="skills" ref={containerRef} className="relative py-32 z-[1]">
+      <section id="skills" ref={containerRef} className="relative z-[1]">
         <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
 
         <div className="relative max-w-7xl mx-auto px-6">

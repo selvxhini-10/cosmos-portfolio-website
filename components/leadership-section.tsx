@@ -37,7 +37,7 @@ export function LeadershipSection() {
   const isInView = useInView(containerRef, { once: true, margin: "-120px" })
 
   return (
-    <section id="leadership" className="relative py-32 overflow-hidden">
+    <section id="leadership" className="relative py-24 overflow-hidden">
   {/* Section Background */}
   <div className="absolute inset-0 bg-cosmic-black/60 -z-20" />
 
@@ -57,7 +57,7 @@ export function LeadershipSection() {
     </div>
 
     {/* ───────── INTERACTIVE MODEL ZONE ───────── */}
-    <div className="relative w-full h-[420px] md:h-[560px] mb-20">
+    <div className="relative w-full h-[420px] md:h-[560px]">
       
       {/* Spline Canvas (interactive) */}
       <Spline

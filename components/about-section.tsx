@@ -11,50 +11,18 @@ const stats = [
   { label: "AI Models Deployed", value: "15+", icon: Brain },
 ]
 
-// Shooting star component
-const ShootingStar = ({ delay = 0, duration = 1 }) => (
-  <motion.div
-    initial={{ opacity: 0, x: -100, y: 100 }}
-    animate={{ 
-      opacity: [0, 1, 1, 0],
-      x: [0, 300],
-      y: [0, -300]
-    }}
-    transition={{
-      duration: duration,
-      delay: delay,
-      repeat: Infinity,
-      repeatDelay: Math.random() * 5 + 3,
-      ease: "easeOut"
-    }}
-    className="absolute top-0 left-0"
-    style={{
-      width: '2px',
-      height: '80px',
-      background: 'linear-gradient(to bottom, rgba(255,180,100,0) 0%, rgba(255,180,100,1) 50%, rgba(255,180,100,0) 100%)',
-      filter: 'blur(1px)',
-      transform: 'rotate(-45deg)'
-    }}
-  />
-)
-
 export function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-50px" })
 
   return (
-    <section id="about" ref={containerRef} className="relative py-32 z-[5]">
+    <section
+  id="about"
+  ref={containerRef}
+  className="relative py-24"
+>
       {/* Gradient fade at top */}
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent z-20 pointer-events-none" />
-      
-      {/* Shooting Stars Container */}
-      <div className="absolute top-0 left-0 w-full h-96 overflow-hidden pointer-events-none z-10">
-        <ShootingStar delay={0} duration={1.2} />
-        <ShootingStar delay={2} duration={1} />
-        <ShootingStar delay={4} duration={1.3} />
-        <ShootingStar delay={6} duration={0.9} />
-        <ShootingStar delay={8} duration={1.1} />
-      </div>
 
       {/* Black Hole Video Background */}
       <div className="absolute top-0 right-0 w-full md:w-3/4 lg:w-2/3 h-[600px] md:h-[800px] -z-10 overflow-hidden">
@@ -103,12 +71,12 @@ export function AboutSection() {
                 <span className="animate-pulse">_</span> Initializing transmission...
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white mb-2">
-                <span>SIGNAL </span>
+                <span>ABOUT </span>
                 <span 
                   className="text-gradient-red-gold animate-text-glow-gradient"
                   style={{ letterSpacing: '0.05em' }}
                 >
-                  RECEIVED
+                  ME
                 </span>
               </h2>
               <p className="text-cosmic-white/60 text-sm" style={{ letterSpacing: '0.02em' }}>
