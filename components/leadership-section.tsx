@@ -7,27 +7,27 @@ import Spline from "@splinetool/react-spline"
 
 const initiatives = [
   {
-    title: "Waterloo HiveMind Program",
+    title: "HiveMind Program",
     description: "Mentoring youth in software development and AI/ML concepts through hands-on projects",
-    impact: "50+ students mentored",
+    impact: "15+ students mentored",
     icon: Users,
   },
   {
     title: "GenAI Booths",
     description: "Interactive exhibits making AI technology accessible to diverse audiences",
-    impact: "1000+ participants engaged",
+    impact: "700+ participants engaged",
     icon: Sparkles,
   },
   {
     title: "WiE Catalyst Conference",
     description: "Technical workshops and panels championing diversity in engineering",
-    impact: "200+ attendees inspired",
+    impact: "50+ attendees inspired",
     icon: Heart,
   },
   {
     title: "STEM Nights",
     description: "Bringing science and technology excitement to schools across Kitchener-Waterloo",
-    impact: "15+ schools reached",
+    impact: "1800+ students reached",
     icon: GraduationCap,
   },
 ]

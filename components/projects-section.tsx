@@ -3,71 +3,84 @@
 import { useRef, useState, useMemo } from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { ExternalLink, Github, X } from "lucide-react"
+import Tilt from 'react-parallax-tilt';
 
 const projects = [
   {
     id: 1,
     title: "Neural Voyager",
-    category: "AI/ML",
+    category: "AI & ML",
     description: "Deep learning platform for real-time image classification and object detection using TensorFlow and PyTorch.",
     image: "/ai-neural-network.png",
     tech: ["Python", "TensorFlow", "PyTorch", "React", "FastAPI"],
     color: "#FFB460",
+    demoUrl: "#", 
+    githubUrl: "https://github.com/m76domi98/AI_AGENT",
     height: "tall",
   },
   {
     id: 2,
     title: "Stellar Dashboard",
-    category: "Web",
+    category: "Web Applications",
     description: "Real-time analytics dashboard with interactive data visualizations and collaborative features.",
     image: "/futuristic-dashboard.png",
     tech: ["Next.js", "TypeScript", "D3.js", "PostgreSQL"],
     color: "#FFB460",
+    demoUrl: "#", 
+    githubUrl: "https://github.com/m76domi98/AI_AGENT",
     height: "short",
   },
   {
     id: 3,
     title: "Quantum Drone",
-    category: "Embedded",
+    category: "Embedded Systems",
     description: "Autonomous drone navigation system with computer vision and real-time path planning.",
     image: "/futuristic-drone-technology.jpg",
     tech: ["ROS", "Python", "OpenCV", "SLAM", "C++"],
     color: "#FFB460",
+    demoUrl: "#", 
+    githubUrl: "https://github.com/m76domi98/AI_AGENT",
     height: "medium",
   },
   {
     id: 4,
     title: "Dark Matter Shield",
-    category: "AI/ML",
+    category: "AI & ML",
     description: "AI-powered threat detection system with real-time monitoring and automated incident response.",
     image: "/cybersecurity-dark-interface.jpg",
     tech: ["Go", "Kubernetes", "Elasticsearch", "ML"],
     color: "#FFB460",
+    demoUrl: "#", 
+    githubUrl: "https://github.com/m76domi98/AI_AGENT",
     height: "short",
   },
   {
     id: 5,
     title: "IoT Control Hub",
-    category: "Embedded",
+    category: "Embedded Systems",
     description: "Smart home automation system with real-time sensor data processing.",
     image: "/ai-neural-network.png",
     tech: ["Arduino", "MQTT", "Node.js", "React"],
     color: "#FFB460",
+    demoUrl: "#", 
+    githubUrl: "https://github.com/m76domi98/AI_AGENT",
     height: "tall",
   },
   {
     id: 6,
     title: "Cloud Orchestrator",
-    category: "Web",
+    category: "Web Applications",
     description: "Microservices architecture with automated deployment and scaling.",
     image: "/futuristic-dashboard.png",
     tech: ["Docker", "Kubernetes", "AWS", "Terraform"],
     color: "#FFB460",
+    demoUrl: "#", 
+    githubUrl: "https://github.com/m76domi98/AI_AGENT",
     height: "medium",
   },
 ]
 
-const categories = ["All", "AI/ML", "Web", "Embedded"]
+const categories = ["All", "AI & ML", "Web Applications", "Embedded Systems", "Game Development"]
 
 export function ProjectsSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -101,15 +114,13 @@ export function ProjectsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
+          <span className="text-cosmic-gold/60 text-sm tracking-[0.3em] uppercase">My Work</span>
           <h2 className="text-4xl sm:text-5xl font-bold text-cosmic-white mb-4">
-            Celestial{" "}
+            Featured{" "}
             <span className="text-gradient-red-gold animate-text-glow-gradient">
-              Creations
+              Projects
             </span>
           </h2>
-          <p className="text-cosmic-white/70 text-base md:text-lg max-w-2xl mx-auto">
-            Explore my portfolio of innovative projects spanning AI/ML, web development, and embedded systems.
-          </p>
         </motion.div>
 
         {/* Filter Buttons */}
@@ -296,7 +307,7 @@ export function ProjectsSection() {
 
                   <div className="flex flex-col sm:flex-row gap-4">
                     <motion.a
-                      href="#"
+                      href={selectedProject.demoUrl}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-cosmic-gold to-cosmic-orange text-cosmic-black font-bold rounded-full border-2 border-transparent text-sm"
@@ -308,7 +319,7 @@ export function ProjectsSection() {
                       View Live
                     </motion.a>
                     <motion.a
-                      href="#"
+                      href={selectedProject.githubUrl}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="flex items-center justify-center gap-2 px-6 py-3 bg-transparent text-cosmic-gold border-2 border-cosmic-gold rounded-full hover:bg-cosmic-gold/10 text-sm"

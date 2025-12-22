@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { MapPin, Github, Linkedin, Twitter } from "lucide-react"
+import { MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
 import { PaperPlaneIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons"
 import Spline from '@splinetool/react-spline'
 
@@ -41,7 +41,28 @@ export function ContactSection() {
           />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6">
+ {/* Black Hole Video - Bottom Left Corner - Lower z-index */}
+     {/* Black Hole Video Background */}
+<div className="absolute bottom-0 left-0 w-full md:w-3/4 lg:w-2/3 h-[600px] md:h-[800px] overflow-hidden "style={{ zIndex: 0 }}>
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    className="absolute bottom-0 left-0 w-full h-full object-cover opacity-60"
+    style={{
+      transform: "translateZ(0)",
+      backfaceVisibility: "hidden",
+    }}
+  >
+    <source src="/videos/blackhole2.mp4" type="video/mp4" />
+  </video>
+
+</div>
+
+      
+      <div className="relative max-w-7xl mx-auto px-6" style={{ zIndex: 2 }}>
           {/* Section Header with UFO - Side by Side Layout */}
           <div className="grid lg:grid-cols-2 gap-8 items-center mb-16">
             {/* Left: Title and Description */}
@@ -138,35 +159,6 @@ export function ContactSection() {
                       <p className="text-cosmic-white">Earth, Milky Way Galaxy</p>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-
-              <motion.div 
-                whileTap={{ scale: 0.98 }}
-                whileHover={{ 
-                  borderColor: "rgba(255, 180, 100, 0.5)",
-                  boxShadow: "0 0 30px rgba(255, 180, 100, 0.3)"
-                }}
-                className="p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl transition-all duration-300 cursor-pointer"
-              >
-                <h3 className="text-xl font-semibold text-cosmic-white mb-6">Communication Links</h3>
-
-                <div className="flex gap-4">
-                  {[
-                    { icon: Github, href: "#", label: "GitHub" },
-                    { icon: Linkedin, href: "#", label: "LinkedIn" },
-                    { icon: Twitter, href: "#", label: "Twitter" },
-                  ].map((social) => (
-                    <motion.a
-                      key={social.label}
-                      href={social.href}
-                      whileHover={{ scale: 1.1, borderColor: "rgba(255, 180, 100, 0.5)" }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-12 h-12 rounded-full border border-cosmic-gold/30 flex items-center justify-center text-cosmic-gold hover:text-cosmic-gold hover:bg-cosmic-gold/10 transition-colors"
-                    >
-                      <social.icon className="w-5 h-5" />
-                    </motion.a>
-                  ))}
                 </div>
               </motion.div>
             </motion.div>

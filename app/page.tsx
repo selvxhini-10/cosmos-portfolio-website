@@ -19,7 +19,6 @@ export default function Home() {
         {/* Content Layer */}
         <div className="relative z-10">
           <Navigation />
-          <HeroSection />
           <AboutSection />
           <SkillsSection />
           <ProjectsSection />
