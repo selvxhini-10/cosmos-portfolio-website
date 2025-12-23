@@ -84,7 +84,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.7, ease: [0.4, 0, 0.2, 1] }}
-            className="text-lg md:text-xl lg:text-2xl text-cosmic-gold mb-6 tracking-wide"
+            className="text-lg font-bold md:text-xl lg:text-2xl text-cosmic-gold mb-6 tracking-wide"
             style={{ 
               textShadow: '0 0 20px rgba(255,180,100,0.4)',
               letterSpacing: '0.05em'
@@ -100,8 +100,7 @@ export function HeroSection() {
             className="text-sm md:text-base lg:text-lg text-cosmic-white/80 mb-10 max-w-3xl leading-relaxed px-4"
             style={{ letterSpacing: '0.02em' }}
           >
-            Exploring the intersection of technology and innovation through immersive experiences. 
-            Building the future, one line of code at a time.
+            Delivering Human-Centered Solutions and User-Friendly Experiences.
           </motion.p>
 
           <motion.div
