@@ -1,60 +1,68 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Github, Linkedin, Twitter, Sparkles, Mail } from "lucide-react"
-import { EnvelopeClosedIcon } from "@radix-ui/react-icons"
+import { Github, Linkedin, Mail } from "lucide-react"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
-    { icon: Github, href: "#", label: "GitHub" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Mail, href: "#contact", label: "Email" },
+    { icon: Github, href: "https://github.com/selvxhini-10", label: "GitHub" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/selvahini-kamalarajan/", label: "LinkedIn" },
+    { icon: Mail, href: "mailto:s5kamala@uwaterloo.ca", label: "Email" },
   ]
 
   return (
-    <footer className="relative z-[1] border-t border-cosmic-gold/20 bg-cosmic-black/60 backdrop-blur-sm">
+    <footer className="relative z-[1] border-t border-cosmic-gold/20 bg-cosmic-black/70">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+
           {/* Logo */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-2 text-xl font-bold text-cosmic-gold"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="text-xl font-bold"
           >
-            <span>Selvahini Kamalarajan</span>
+            <span className="bg-gradient-to-r from-[#ff4136] via-[#ffb460] to-[#ff851b] bg-clip-text text-transparent">
+              Selvahini Kamalarajan
+            </span>
           </motion.div>
 
           {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex gap-4"
-          >
-            {socialLinks.map((social) => (
+          <div className="flex gap-4">
+            {socialLinks.map((social, index) => (
               <motion.a
                 key={social.label}
                 href={social.href}
-                whileHover={{ scale: 1.1, y: -3 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-10 h-10 rounded-full border border-cosmic-gold/40 flex items-center justify-center text-cosmic-gold hover:bg-cosmic-gold/10 hover:border-cosmic-gold transition-all duration-300"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05, duration: 0.2, ease: "easeOut" }}
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+                className="
+                  w-11 h-11 rounded-full
+                  flex items-center justify-center
+                  border-2 border-cosmic-gold/40
+                  bg-cosmic-black
+                  text-cosmic-gold
+                  transition-colors duration-150
+                  hover:border-cosmic-gold
+                  hover:bg-cosmic-gold/10
+                "
                 aria-label={social.label}
               >
-                <social.icon className="w-4 h-4" />
+                <social.icon className="w-5 h-5" />
               </motion.a>
             ))}
-          </motion.div>
+          </div>
 
           {/* Copyright */}
           <motion.p
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="text-cosmic-white/50 text-sm tracking-wider"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="text-cosmic-white/80 text-sm tracking-wider"
           >
             © {currentYear} ALL RIGHTS RESERVED
           </motion.p>

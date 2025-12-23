@@ -8,19 +8,19 @@ import Spline from "@splinetool/react-spline"
 const initiatives = [
   {
     title: "HiveMind Program",
-    description: "Mentoring youth in software development and AI/ML concepts through hands-on projects",
-    impact: "15+ students mentored",
+    description: "Mentoring youth in science, math, technology and engineering subjects",
+    impact: "15+ students tutored",
     icon: Users,
   },
   {
     title: "GenAI Booths",
-    description: "Interactive exhibits making AI technology accessible to diverse audiences",
+    description: "Sparked insightful conversations about AI technology on campus",
     impact: "700+ participants engaged",
     icon: Sparkles,
   },
   {
     title: "WiE Catalyst Conference",
-    description: "Technical workshops and panels championing diversity in engineering",
+    description: "Facilitated hands-on technical workshops and panels",
     impact: "50+ attendees inspired",
     icon: Heart,
   },
@@ -64,6 +64,7 @@ export function LeadershipSection() {
         scene="https://prod.spline.design/cxk6FWHBLJBTmXfI/scene.splinecode"
         className="absolute inset-0 w-full h-full"
       />
+       
 
       {/* Edge blending ONLY (no pointer blocking) */}
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" />

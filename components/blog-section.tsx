@@ -5,31 +5,12 @@ import { motion, useInView } from "framer-motion"
 import { BookOpen, ArrowRight, Calendar, Clock } from "lucide-react"
 import Link from "next/link"
 import Spline from '@splinetool/react-spline'
+import type { BlogPost } from "@/lib/types/blog"
+import { blogPosts } from "@/lib/data/blogPosts"
 
-
-const featuredArticles = [
-  {
-    title: "The Future of Web Development: AI-Powered Interfaces",
-    excerpt: "Exploring how artificial intelligence is reshaping the way we build and interact with web applications...",
-    date: "2024-03-15",
-    readTime: "8 min read",
-    category: "AI & Web Dev",
-  },
-  {
-    title: "Building Scalable Microservices with Node.js",
-    excerpt: "A deep dive into architectural patterns and best practices for creating robust distributed systems...",
-    date: "2024-02-28",
-    readTime: "12 min read",
-    category: "Backend",
-  },
-  {
-    title: "Modern CSS: Beyond the Basics",
-    excerpt: "Unlocking the power of CSS Grid, Container Queries, and the latest features transforming frontend design...",
-    date: "2024-02-10",
-    readTime: "6 min read",
-    category: "Frontend",
-  },
-]
+const featuredArticles = blogPosts.filter(
+  (p: BlogPost) => p.featured
+)
 
 export function BlogSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -104,8 +85,8 @@ export function BlogSection() {
           Exploring the Intersection of{" "}
           <span className="text-gradient-red-gold">Code & Consciousness</span>
         </h3>
-        <p className="text-cosmic-white/70 text-sm md:text-base">
-          Deep dives into technology, development, and digital innovation
+        <p className="text-cosmic-white/90 max-w-4xl mx-auto text-sm md:text-base">
+          Explore a collection of my evolving ideas, research, and documentation. These notes are a work-in-progress and give a glimpse into the thinking behind my ongoing projects.
         </p>
       </motion.div>
     </div>
@@ -153,12 +134,13 @@ export function BlogSection() {
                   </div>
                   
                   <Link
-                    href="/blog"
-                    className="inline-flex items-center gap-2 text-cosmic-gold hover:text-cosmic-orange transition-colors duration-300 font-mono text-sm group/link"
-                  >
-                    Read More
-                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-300" />
-                  </Link>
+  href={`/blog/${article.slug}`}
+  className="inline-flex items-center gap-2 text-cosmic-gold hover:text-cosmic-orange transition-colors duration-300 font-mono text-sm group/link"
+>
+  Read More
+  <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-300" />
+</Link>
+
                 </div>
               </motion.article>
             ))}

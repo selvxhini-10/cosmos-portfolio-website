@@ -87,14 +87,14 @@ const experiences = [
     id: 1,
     title: "AI Developer",
     company_name: "Information Systems & Technology, University of Waterloo",
-    date: "Sep. 2022 - Jun. 2024",
-    icon: "/images/clc.png",
+    date: "Sep. 2025 - Dec. 2025",
+    icon: "/images/uw.svg",
     iconBg: "#ff6347",
-    skills: ["Innovation", "Leadership", "Project Management"],
+    skills: [".NET/C#", "Azure OpenAI", "Cosmos DB", "Azure AI Search"],
     points: [
-      "Led cross-functional teams to build an informative website about Fast Fashion using HTML, CSS, JavaScript and Bootstrap",
-      "Designed and proposed a safety application prototype using Marvel to combat youth violence and improve emergency preparedness",
-      "Facilitated end-to-end project management using Kanban boards, overseeing ideation and developing workflows to ensure timely completion.",
+      "Deployed Azure Functions–based RAG pipelines and AI chatbots supporting 10,500+ campus documents in production testing",
+      "Architected an agentic platform using Semantic Kernel and Microsoft Agent Framework for 3+ agents",
+      "Built Jira Service Management automation pipeline to post internal AI-generated comments on tickets and stream user feedback to Azure Cosmos DB",
     ],
   },
   {
@@ -104,26 +104,25 @@ const experiences = [
     date: "Jan. 2025 - Apr. 2025",
     icon: "/images/wie.png",
     iconBg: "#ff8c00",
-    skills: ["Technological Agility", "Implementation", "Critical Thinking"],
+    skills: ["AI/ML", "Arduino", "Robotics", "Circuitry"],
     points: [
-      "Delivered 50+ hands-on Women in Engineering workshops to 1300+ students across Ontario, leveraging my strong communication and organizational skills",
-      "Developed robotics, AI and programming challenges using LEGO Spike Primes, Teachable Machine, Arduino, Micro:bits, and Ozobots, increasing STEM participation",
-      "Implemented documentation, budgets and oral presentations using Ontario education standards, developing 60% more innovative STEM outreach content.",
-      "Debugged and troubleshooted electronic devices, circuitry and coding projects, including an AI-powered sign language detection site and Arduino clinostat to simulate microgravity.",
-    ],
+      "Delivered 50+ hands-on Women in Engineering workshops to 1300+ students across Ontario",
+     "Trained and embedded a Teachable Machine model with TensorFlow.js for real-time sign language detection on a responsive web platform",
+      "Developed 60% more innovative STEM outreach content, as measured against Ontario education standards, by integrating Tinkercad, SketchUp, Scratch Coding, Arduino, Micro:bits and Ozobots",
+    ]
   },
   {
     id: 3,
-    title: "Fullstack Web Developer",
+    title: "Fullstack Developer",
     company_name: "BrandEQ Group",
     date: "Jul. 2022 - Sep. 2022",
     icon: "/images/brandeq.jpeg",
     iconBg: "#ffa500",
-    skills: ["Collaboration", "Problem-Solving", "Communication"],
+    skills: ["Fullstack", "Marketing & Design"],
     points: [
-      "Enhanced SEO by implementing WCAG 2.0 accessibility standards, PR backlinking, responsive web design and architecture using Editor X, WordPress and JavaScript",
-      "Developed and pitched website prototypes using MS Office tools and agile methodologies to improve user interaction, receiving endorsement from national brands",
-      "Improved user experience, accessibility and mobile optimization by 60% by leading web development team to redesign and monitor 25+ client websites and software applications",
+      "Enhanced SEO by implementing WCAG 2.0 accessibility standards, PR backlinking and UX/UI design with WordPress and JavaScript",
+      "Designed the front end of a mobile application for iOS/Android using Flutter",
+      "Improved mobile optimization by 60%, as endorsed by client feedback, by redesigning 25+ websites and applications",
     ],
   },
 ]
@@ -143,8 +142,7 @@ export function ExperienceSection() {
                       transition={{ duration: 0.8 }}
                       className="text-center mb-16"
                     >
-                      <span className="text-cosmic-gold/60 text-sm tracking-[0.3em] uppercase">Neural Core</span>
-                      <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white mt-2">
+                      <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white">
                         WORK <span className="text-gradient-red-gold animate-text-glow-gradient">EXPERIENCE</span>
                       </h2>
                     </motion.div>

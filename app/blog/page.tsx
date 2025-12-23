@@ -4,73 +4,10 @@ import { useState, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { CosmicBackground } from "@/components/cosmic-background"
 import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react"
 import Link from "next/link"
 import Spline from '@splinetool/react-spline' 
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "The Future of Web Development: AI-Powered Interfaces",
-    excerpt: "Exploring how artificial intelligence is reshaping the way we build and interact with web applications. From automated code generation to intelligent user experiences...",
-    date: "2024-03-15",
-    readTime: "8 min read",
-    category: "AI & Web Dev",
-    tags: ["AI", "WebDev", "UX", "Future Tech"],
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Building Scalable Microservices with Node.js",
-    excerpt: "A deep dive into architectural patterns and best practices for creating robust distributed systems. Learn how to design services that can handle millions of requests...",
-    date: "2024-02-28",
-    readTime: "12 min read",
-    category: "Backend",
-    tags: ["Node.js", "Microservices", "Architecture", "Backend"],
-    featured: true,
-  },
-  {
-    id: 3,
-    title: "Modern CSS: Beyond the Basics",
-    excerpt: "Unlocking the power of CSS Grid, Container Queries, and the latest features transforming frontend design. Discover techniques that will elevate your styling game...",
-    date: "2024-02-10",
-    readTime: "6 min read",
-    category: "Frontend",
-    tags: ["CSS", "Frontend", "Design", "Web Standards"],
-    featured: true,
-  },
-  {
-    id: 4,
-    title: "TypeScript Best Practices for Large Scale Applications",
-    excerpt: "Essential patterns and techniques for maintaining type safety in enterprise-level codebases. Learn how to leverage TypeScript's advanced features effectively...",
-    date: "2024-01-22",
-    readTime: "10 min read",
-    category: "TypeScript",
-    tags: ["TypeScript", "Best Practices", "Enterprise"],
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "Optimizing React Performance: A Comprehensive Guide",
-    excerpt: "Master the art of building lightning-fast React applications. From code splitting to memoization, discover the techniques that matter most...",
-    date: "2024-01-08",
-    readTime: "15 min read",
-    category: "React",
-    tags: ["React", "Performance", "Optimization"],
-    featured: false,
-  },
-  {
-    id: 6,
-    title: "GraphQL vs REST: Choosing the Right API Architecture",
-    excerpt: "An in-depth comparison of two popular API paradigms. Understand when to use each approach and how to migrate between them...",
-    date: "2023-12-15",
-    readTime: "9 min read",
-    category: "API Design",
-    tags: ["GraphQL", "REST", "API", "Architecture"],
-    featured: false,
-  },
-]
+import { blogPosts } from "@/lib/data/blogPosts"
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -85,10 +22,6 @@ export default function BlogPage() {
 
   return (
     <main className="relative min-h-screen overflow-x-hidden">
-      {/* Cosmic Background Layer */}
-      <div className="fixed inset-0 z-[5] pointer-events-none">
-        <CosmicBackground />
-      </div>
 
       {/* Content Layer */}
       <div className="relative z-10">
@@ -150,7 +83,6 @@ export default function BlogPage() {
     </motion.div>
   </div>
 </div>
-
 
             {/* Category Filter */}
             <motion.div

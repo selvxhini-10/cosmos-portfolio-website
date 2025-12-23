@@ -45,13 +45,16 @@ export function Navigation() {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-500 ${
-        isScrolled ? "bg-cosmic-black/90 backdrop-blur-xl border-b border-cosmic-gold/20" : "bg-transparent"
-      }`}
-    >
+  initial={{ y: -60 }}
+  animate={{ y: 0 }}
+  transition={{ duration: 0.25, ease: "easeOut" }}
+  className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
+    isScrolled
+      ? "bg-cosmic-black/90 backdrop-blur-md border-b border-cosmic-gold/20"
+      : "bg-transparent"
+  }`}
+>
+
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-3 sm:py-4">
         {/* Desktop & Tablet Layout */}
         <div className="flex items-center justify-between lg:grid lg:grid-cols-3 gap-4">
@@ -71,21 +74,18 @@ export function Navigation() {
 
           {/* Center: Navigation Links - Hidden below lg */}
           <div className="hidden lg:flex items-center justify-center gap-6 xl:gap-8">
-            {navItems.map((item, index) => (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="relative text-cosmic-white/70 hover:text-cosmic-gold transition-all duration-300 text-xs xl:text-sm tracking-widest uppercase group whitespace-nowrap"
-                whileHover={{ scale: 1.05 }}
-                style={{ letterSpacing: '0.15em' }}
-              >
-                <span className="group-hover:drop-shadow-[0_0_10px_rgba(255,180,100,0.8)]">{item.name}</span>
-              </motion.a>
-            ))}
-          </div>
+  {navItems.map((item) => (
+    <a
+      key={item.name}
+      href={item.href}
+      className="relative text-cosmic-white hover:text-cosmic-gold transition-colors duration-200 text-xs xl:text-sm tracking-widest uppercase whitespace-nowrap"
+      style={{ letterSpacing: "0.15em" }}
+    >
+      {item.name}
+    </a>
+  ))}
+</div>
+
 
           {/* Right: Contact Button & Mobile Menu */}
           <div className="flex items-center justify-end gap-3">
@@ -145,7 +145,7 @@ export function Navigation() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="text-cosmic-white/90 hover:text-cosmic-gold transition-colors duration-300 text-2xl tracking-widest uppercase font-bold"
+                  className="text-cosmic-white hover:text-cosmic-gold transition-colors duration-150 text-2xl tracking-widest uppercase font-bold"
                   style={{ letterSpacing: '0.15em' }}
                 >
                   {item.name}

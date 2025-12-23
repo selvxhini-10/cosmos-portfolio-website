@@ -11,20 +11,37 @@ import Spline from '@splinetool/react-spline'
 export function ContactSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
+  const [success, setSuccess] = useState(false)
+
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    setIsSubmitting(false)
+  e.preventDefault()
+  setIsSubmitting(true)
+  setSuccess(false)
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formState),
+    })
+
+    if (!res.ok) throw new Error("Failed")
+
     setFormState({ name: "", email: "", message: "" })
+    setSuccess(true)
+
+  } catch (err) {
+    console.error(err)
+  } finally {
+    setIsSubmitting(false)
   }
+}
 
   return (
     <>
@@ -62,38 +79,21 @@ export function ContactSection() {
 </div>
 
       
-      <div className="relative max-w-7xl mx-auto px-6" style={{ zIndex: 2 }}>
-          {/* Section Header with UFO - Side by Side Layout */}
-          <div className="grid lg:grid-cols-2 gap-8 items-center mb-16">
-            {/* Left: Title and Description */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="space-y-6"
-              style={{ willChange: 'transform, opacity' }}
-            >
-              <div>
-                <span className="text-cosmic-gold/60 text-sm tracking-[0.3em] uppercase">Transmission Channel</span>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-cosmic-white mt-2">
-                  ESTABLISH <span className="text-gradient-red-gold animate-text-glow-gradient">CONTACT</span>
-                </h2>
-                <p className="mt-6 text-cosmic-white/60 text-lg leading-relaxed">
-                  Ready to embark on a new mission? Send a signal through the void and let's create something extraordinary
-                  together.
+      <div className="relative max-w-7xl mx-auto px-6 text-center">
+         {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white">
+            CONTACT <span className="text-gradient-red-gold animate-text-glow-gradient">ME</span>
+          </h2>
+           <p className="mt-6 mx-auto max-w-3xl text-cosmic-white/90 text-lg leading-relaxed">
+                  I'm always open to collaborating on projects that make a meaningful impact. Feel free to connect via the form below or my socials! 
                 </p>
-              </div>
-              
-              {/* Terminal Status */}
-              <div className="p-4 border border-cosmic-gold/20 rounded-lg bg-cosmic-black/80 font-mono text-sm backdrop-blur-xl">
-                <div className="text-cosmic-gold">$ establishing_secure_connection...</div>
-                <div className="text-cosmic-white/50 mt-1">{">> Signal strength: Strong"}</div>
-                <div className="text-cosmic-white/50">{">> Encryption: Active"}</div>
-                <div className="text-cosmic-gold mt-2 animate-pulse">{">> Awaiting transmission..."}</div>
-              </div>
-            </motion.div>
-
-            {/* Right: 3D UFO Model */}
+        </motion.div>
+          {/* Right: 3D UFO Model */}
           <motion.div
   initial={{ opacity: 0, x: 50 }}
   animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -118,7 +118,6 @@ export function ContactSection() {
   </div>
 </motion.div>
 
-          </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
@@ -137,29 +136,20 @@ export function ContactSection() {
                 }}
                 className="p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl transition-all duration-300 cursor-pointer"
               >
-                <h3 className="text-xl font-semibold text-cosmic-white mb-6">Signal Coordinates</h3>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4 text-cosmic-white/70">
-                    <div className="w-12 h-12 rounded-full border border-cosmic-gold/30 flex items-center justify-center">
-                      <EnvelopeClosedIcon className="w-5 h-5 text-cosmic-gold" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-cosmic-white/50">Email</p>
-                      <p className="text-cosmic-white">explorer@cosmic.dev</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 text-cosmic-white/70">
-                    <div className="w-12 h-12 rounded-full border border-cosmic-gold/30 flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-cosmic-gold" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-cosmic-white/50">Location</p>
-                      <p className="text-cosmic-white">Earth, Milky Way Galaxy</p>
-                    </div>
-                  </div>
-                </div>
+                <div className="flex items-center gap-2 mb-4">
+  <div className="w-3 h-3 rounded-full bg-red-500" />
+  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+  <div className="w-3 h-3 rounded-full bg-green-500" />
+  <span className="ml-4 text-cosmic-white/50 text-sm">
+    secure_link.sys
+  </span>
+</div>
+{/* Terminal Status */}
+                <div className="text-cosmic-gold">$ establishing_secure_connection...</div>
+                <div className="text-cosmic-white/50 mt-1">{">> Signal strength: Strong"}</div>
+                <div className="text-cosmic-white/50">{">> Encryption: Active"}</div>
+                <div className="text-cosmic-gold mt-2 animate-pulse">{">> Awaiting transmission..."}</div>
+            
               </motion.div>
             </motion.div>
 
@@ -171,13 +161,14 @@ export function ContactSection() {
               style={{ willChange: 'transform, opacity' }}
             >
               <form
-                onSubmit={handleSubmit}
-                className="p-8 border border-cosmic-gold/20 rounded-2xl bg-cosmic-black/50 backdrop-blur-xl"
-              >
+  onSubmit={handleSubmit}
+  className="p-8 border border-cosmic-gold/20 rounded-2xl bg-cosmic-black/50 backdrop-blur-xl text-left"
+>
+
                 <div className="space-y-6">
                   <div>
                     <label className="block text-cosmic-white/70 text-sm mb-2 uppercase tracking-wider">
-                      Callsign (Name)
+                      Name
                     </label>
                     <input
                       type="text"
@@ -191,7 +182,7 @@ export function ContactSection() {
 
                   <div>
                     <label className="block text-cosmic-white/70 text-sm mb-2 uppercase tracking-wider">
-                      Transmission Frequency (Email)
+                      Email
                     </label>
                     <input
                       type="email"
@@ -205,7 +196,7 @@ export function ContactSection() {
 
                   <div>
                     <label className="block text-cosmic-white/70 text-sm mb-2 uppercase tracking-wider">
-                      Message Payload
+                      Message
                     </label>
                     <textarea
                       value={formState.message}
@@ -216,6 +207,16 @@ export function ContactSection() {
                       placeholder="Your message..."
                     />
                   </div>
+                  {success && (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="rounded-lg border border-green-400/30 bg-green-400/10 px-4 py-3 text-center text-green-300 text-sm"
+  >
+    Message sent successfully. I’ll get back to you soon.
+  </motion.div>
+)}
+
 
                   <motion.button
                     type="submit"
@@ -227,12 +228,12 @@ export function ContactSection() {
                     {isSubmitting ? (
                       <>
                         <div className="w-5 h-5 border-2 border-cosmic-black/30 border-t-cosmic-black rounded-full animate-spin" />
-                        Transmitting...
+                        SENDING...
                       </>
                     ) : (
                       <>
                         <PaperPlaneIcon className="w-5 h-5" />
-                        Send Transmission
+                        Send
                       </>
                     )}
                   </motion.button>
