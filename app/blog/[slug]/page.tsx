@@ -2,15 +2,15 @@
 
 import { notFound } from "next/navigation"
 import { blogPosts } from "@/lib/data/blogPosts"
-import type { BlogPost } from "@/lib/types/blog"
 import { Calendar, Clock, Tag } from "lucide-react"
 
 type BlogPostPageProps = {
   params: { slug: string }
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = blogPosts.find(p => p.slug === params.slug)
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params
+  const post = blogPosts.find(p => p.slug === slug)
 
   if (!post) return notFound()
 

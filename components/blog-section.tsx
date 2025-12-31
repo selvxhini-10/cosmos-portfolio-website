@@ -18,9 +18,9 @@ export function BlogSection() {
 
   return (
     <>
-      <section id="blog" ref={containerRef} className="relative z-[1]">
+      <section id="blog" ref={containerRef} className="relative z-[1] mb-16">
         {/* Section Background */}
-        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
+        <div className="absolute inset-0 bg-cosmic-black/40 -z-10" />
 
         <div className="relative max-w-7xl mx-auto px-6">
           {/* Terminal Header */}
@@ -37,14 +37,14 @@ export function BlogSection() {
                 <div className="w-3 h-3 rounded-full bg-green-500" />
                 <span className="ml-4 text-cosmic-white/50 text-sm font-mono">blog_archive.exe</span>
               </div>
-              <div className="border border-cosmic-gold/30 rounded-lg p-6 bg-cosmic-black/50 backdrop-blur-xl">
+              <div className="border border-cosmic-gold/30 rounded-lg p-6 bg-cosmic-black/50">
                 <div className="font-mono text-cosmic-gold/80 text-sm mb-2">
                   <span className="text-cosmic-gold">$ </span>
                   <span className="animate-pulse">_</span> Loading thought database...
                 </div>
                 <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white mb-2">
                   <span className="font-mono">BLOG </span>
-                  <span className="text-gradient-red-gold animate-text-glow-gradient font-mono">TRANSMISSIONS</span>
+                  <span className="text-gradient-red-gold animate-text-glow-gradient font-mono">ARTICLES</span>
                 </h2>
                 <p className="text-cosmic-white/60 font-mono text-sm">
                   {">> Insights from the developer void"}
@@ -63,11 +63,12 @@ export function BlogSection() {
   {/* Height-defined interaction zone */}
   <div className="relative w-full h-[400px] md:h-[600px]">
     
-    {/* Spline Canvas */}
+    {/* Spline Canvas  */}
     <Spline
       scene="https://prod.spline.design/BNf8gJfjxTOH9jNT/scene.splinecode"
       className="absolute inset-0 w-full h-full"
     />
+
 
     {/* Edge blending (NO pointer blocking) */}
     <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" />
@@ -105,7 +106,7 @@ export function BlogSection() {
                 className="group relative"
                 style={{ willChange: 'transform, opacity' }}
               >
-                <div className="h-full p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl hover:border-cosmic-gold/40 transition-all duration-300">
+                <div className="h-full p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 hover:border-cosmic-gold/40 transition-all duration-300">
                   <div className="flex items-center gap-2 mb-4">
                     <span className="px-3 py-1 text-xs font-mono text-cosmic-gold bg-cosmic-gold/10 rounded-full border border-cosmic-gold/20">
                       {article.category}

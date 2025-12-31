@@ -59,7 +59,7 @@ export function LeadershipSection() {
     {/* ───────── INTERACTIVE MODEL ZONE ───────── */}
     <div className="relative w-full h-[420px] md:h-[560px]">
       
-      {/* Spline Canvas (interactive) */}
+      {/* Spline Canvas (interactive)  */}
       <Spline
         scene="https://prod.spline.design/cxk6FWHBLJBTmXfI/scene.splinecode"
         className="absolute inset-0 w-full h-full"
@@ -79,7 +79,7 @@ export function LeadershipSection() {
       {initiatives.map((initiative, index) => (
         <div
           key={index}
-          className="group rounded-xl p-6 border border-cosmic-gold/20 bg-cosmic-black/60 backdrop-blur-md transition-all hover:border-cosmic-gold/40 hover:shadow-[0_0_25px_rgba(255,140,80,0.25)]"
+          className="group rounded-xl p-6 border border-cosmic-gold/20 bg-cosmic-black/60 transition-all hover:border-cosmic-gold/40 hover:shadow-[0_0_25px_rgba(255,140,80,0.25)]"
         >
           <div className="w-12 h-12 mb-4 rounded-lg border border-cosmic-gold/40 flex items-center justify-center">
             <initiative.icon className="w-6 h-6 text-cosmic-gold" />

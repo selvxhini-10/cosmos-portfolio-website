@@ -76,7 +76,7 @@ const projects = [
     color: "#FFB460",
     demoUrl: "#", 
   githubUrl: "https://github.com/selvxhini-10/Covid-Tracker",
-    height: "medium",
+    height: "short",
   },
   {
     id: 7,
@@ -100,7 +100,7 @@ const projects = [
     color: "#FFB460",
     demoUrl: "#", 
   githubUrl: "https://github.com/selvxhini-10/AssistWave-STM32-TX-",
-    height: "medium",
+    height: "tall",
   },
 ]
 
@@ -197,7 +197,7 @@ export function ProjectsSection() {
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   onClick={() => setSelectedProject(project)}
-                  className={`group relative ${getHeightClass(project.height)} rounded-xl overflow-hidden cursor-pointer border-2 border-cosmic-gold/30 hover:border-cosmic-gold/60 transition-all duration-300 bg-cosmic-black/60 backdrop-blur-xl`}
+                  className={`group relative ${getHeightClass(project.height)} rounded-xl overflow-hidden cursor-pointer border-2 border-cosmic-gold/30 hover:border-cosmic-gold/60 transition-all duration-300 bg-cosmic-black/60`}
                   style={{
                     boxShadow: '0 0 30px rgba(255,180,100,0.2), inset 0 0 30px rgba(255,180,100,0.05)'
                   }}
@@ -267,14 +267,14 @@ export function ProjectsSection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 flex items-center justify-center p-4 bg-cosmic-black/95 backdrop-blur-xl overflow-y-auto z-50 pt-24"
+            className="fixed inset-0 flex items-center justify-center p-4 bg-cosmic-black/95 overflow-y-auto z-50 pt-24"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl bg-cosmic-deep/90 backdrop-blur-xl border-2 border-cosmic-gold/40 rounded-2xl overflow-hidden"
+              className="relative w-full max-w-3xl bg-cosmic-deep/90 border-2 border-cosmic-gold/40 rounded-2xl overflow-hidden"
               style={{
                 boxShadow: '0 0 50px rgba(255,180,100,0.4), inset 0 0 50px rgba(255,180,100,0.05)',
                 maxHeight: 'calc(100vh - 8rem)'

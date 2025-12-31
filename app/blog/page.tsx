@@ -14,7 +14,7 @@ export default function BlogPage() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
 
-  const categories = Array.from(new Set(blogPosts.map((post) => post.category)))
+  const categories = Array.from(new Set(blogPosts.map((post) => post.category))).filter(Boolean) as string[]
   
   const filteredPosts = selectedCategory
     ? blogPosts.filter((post) => post.category === selectedCategory)
@@ -29,7 +29,7 @@ export default function BlogPage() {
 
         {/* Hero Section with 3D Brain */}
         <section className="relative pt-32 pb-20 px-6">
-          <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
+          <div className="absolute inset-0 bg-cosmic-black/40 -z-10" />
           
           <div className="max-w-7xl mx-auto">
             {/* Back Button */}
@@ -104,7 +104,7 @@ export default function BlogPage() {
               {categories.map((category) => (
                 <button
                   key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => setSelectedCategory(category ?? null)}
                   className={`px-4 py-2 rounded-full font-mono text-sm transition-all duration-300 ${
                     selectedCategory === category
                       ? "bg-cosmic-gold text-cosmic-black shadow-[0_0_20px_rgba(255,180,100,0.4)]"
@@ -120,7 +120,7 @@ export default function BlogPage() {
 
         {/* Blog Posts Grid */}
         <section ref={containerRef} className="relative py-12 px-6">
-          <div className="absolute inset-0 bg-cosmic-black/20 backdrop-blur-sm -z-10" />
+          <div className="absolute inset-0 bg-cosmic-black/20 -z-10" />
           
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -132,7 +132,7 @@ export default function BlogPage() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="group relative"
                 >
-                  <div className="h-full p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl hover:border-cosmic-gold/40 hover:shadow-[0_0_30px_rgba(255,180,100,0.2)] transition-all duration-300">
+                  <div className="h-full p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 hover:border-cosmic-gold/40 hover:shadow-[0_0_30px_rgba(255,180,100,0.2)] transition-all duration-300">
                     {post.featured && (
                       <div className="absolute -top-3 -right-3 px-3 py-1 bg-gradient-to-r from-cosmic-gold to-cosmic-orange text-cosmic-black text-xs font-bold rounded-full shadow-lg">
                         FEATURED
@@ -175,7 +175,7 @@ export default function BlogPage() {
                         {post.readTime}
                       </span>
                     </div>
-                    
+                    <Link href={`/blog/${post.slug}`}>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -183,6 +183,7 @@ export default function BlogPage() {
                     >
                       Read Article
                     </motion.button>
+                    </Link>
                   </div>
                 </motion.article>
               ))}

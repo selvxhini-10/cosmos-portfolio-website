@@ -7,11 +7,16 @@ import { motion, useInView } from "framer-motion"
 import { MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
 import { PaperPlaneIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons"
 import Spline from '@splinetool/react-spline'
+import dynamic from "next/dynamic"
 
 export function ContactSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
   const [success, setSuccess] = useState(false)
+const Spline = dynamic(
+  () => import("@splinetool/react-spline"),
+  { ssr: false }
+)
 
   const [formState, setFormState] = useState({
     name: "",
@@ -46,7 +51,7 @@ export function ContactSection() {
   return (
     <>
       <section id="contact" ref={containerRef} className="relative py-24 z-[1]">
-        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
+        <div className="absolute inset-0 bg-cosmic-black/40 -z-10" />
 
         {/* Nebula glow effect */}
         <div className="absolute inset-0 pointer-events-none">
@@ -58,26 +63,17 @@ export function ContactSection() {
           />
         </div>
 
- {/* Black Hole Video - Bottom Left Corner - Lower z-index */}
-     {/* Black Hole Video Background */}
-<div className="absolute bottom-0 left-0 w-full md:w-3/4 lg:w-2/3 h-[600px] md:h-[800px] overflow-hidden "style={{ zIndex: 0 }}>
-  <video
-    autoPlay
-    loop
-    muted
-    playsInline
-    preload="metadata"
-    className="absolute bottom-0 left-0 w-full h-full object-cover opacity-60"
-    style={{
-      transform: "translateZ(0)",
-      backfaceVisibility: "hidden",
-    }}
-  >
-    <source src="/videos/blackhole2.mp4" type="video/mp4" />
-  </video>
+  {/* Black Hole Video Background*/}
+<div className="absolute bottom-0 left-0 w-full md:w-3/4 lg:w-2/3 h-[600px] md:h-[800px] overflow-hidden pointer-events-none -z-10">
+  <img
+    className="w-full h-full object-cover opacity-60"
+    src="/images/black.gif"
+    alt="Black Hole Background"
+  />
 
+  {/* Bottom fade only (cheap, static) */}
+  <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cosmic-black to-transparent" />
 </div>
-
       
       <div className="relative max-w-7xl mx-auto px-6 text-center">
          {/* Section Header */}
@@ -90,7 +86,7 @@ export function ContactSection() {
             CONTACT <span className="text-gradient-red-gold animate-text-glow-gradient">ME</span>
           </h2>
            <p className="mt-6 mx-auto max-w-3xl text-cosmic-white/90 text-lg leading-relaxed">
-                  I'm always open to collaborating on projects that make a meaningful impact. Feel free to connect via the form below or my socials! 
+            I'm always open to collaborating on projects that make a meaningful impact. Feel free to connect via the form below or my socials! 
                 </p>
         </motion.div>
           {/* Right: 3D UFO Model */}
@@ -108,6 +104,7 @@ export function ContactSection() {
       scene="https://prod.spline.design/bRYq5NjKXuiOAAG8/scene.splinecode"
       className="absolute inset-0 w-full h-full"
     />
+    
 
     {/* Edge fade for blending */}
     <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" />
@@ -134,7 +131,7 @@ export function ContactSection() {
                   borderColor: "rgba(255, 180, 100, 0.5)",
                   boxShadow: "0 0 30px rgba(255, 180, 100, 0.3)"
                 }}
-                className="p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 backdrop-blur-xl transition-all duration-300 cursor-pointer"
+                className="p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/50 transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-center gap-2 mb-4">
   <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -162,7 +159,7 @@ export function ContactSection() {
             >
               <form
   onSubmit={handleSubmit}
-  className="p-8 border border-cosmic-gold/20 rounded-2xl bg-cosmic-black/50 backdrop-blur-xl text-left"
+  className="p-8 border border-cosmic-gold/20 rounded-2xl bg-cosmic-black/50 text-left"
 >
 
                 <div className="space-y-6">

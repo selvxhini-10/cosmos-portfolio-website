@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
 const navItems = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
-  { name: "Blog", href: "#blog" },
+  { name: "About", href: "/#about" },
+  { name: "Skills", href: "/#skills" },
+  { name: "Experience", href: "/#experience" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Blog", href: "/#blog" },
 ]
 
 export function Navigation() {
@@ -50,7 +50,7 @@ export function Navigation() {
   transition={{ duration: 0.25, ease: "easeOut" }}
   className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-300 ${
     isScrolled
-      ? "bg-cosmic-black/90 backdrop-blur-md border-b border-cosmic-gold/20"
+      ? "bg-cosmic-black/90 border-b border-cosmic-gold/20"
       : "bg-transparent"
   }`}
 >
@@ -69,7 +69,8 @@ export function Navigation() {
             {/* Show only SK on mobile, full name on larger screens */}
             <span className="block sm:hidden">SK</span>
             <span className="hidden sm:block lg:hidden">Selvahini K.</span>
-            <span className="hidden lg:block">Selvahini Kamalarajan</span>
+            <span className="hidden lg:block bg-gradient-to-r from-[#ff4136] via-[#ffb460] to-[#ff851b] bg-clip-text text-transparent">Selvahini Kamalarajan</span>
+      
           </motion.a>
 
           {/* Center: Navigation Links - Hidden below lg */}
@@ -90,7 +91,7 @@ export function Navigation() {
           {/* Right: Contact Button & Mobile Menu */}
           <div className="flex items-center justify-end gap-3">
             <motion.a
-              href="#contact"
+              href="/contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="hidden lg:flex items-center px-4 xl:px-6 py-2 bg-transparent text-cosmic-gold hover:bg-cosmic-gold/10 rounded-full text-xs xl:text-sm font-semibold tracking-wider uppercase transition-colors border-2 border-cosmic-gold"
@@ -105,7 +106,7 @@ export function Navigation() {
             {/* Mobile Menu Button */}
             <button 
               onClick={handleMobileMenuToggle}
-              className="lg:hidden text-cosmic-gold p-2 rounded-lg border-2 border-cosmic-gold bg-cosmic-black/50 backdrop-blur-sm z-[10001]"
+              className="lg:hidden text-cosmic-gold p-2 rounded-lg border-2 border-cosmic-gold bg-cosmic-black/50 z-[10001]"
               style={{
                 boxShadow: '0 0 20px rgba(255,180,100,0.5), inset 0 0 15px rgba(255,180,100,0.08)'
               }}
@@ -151,9 +152,8 @@ export function Navigation() {
                   {item.name}
                 </motion.a>
               ))}
-              
               <motion.a
-                href="#contact"
+                href="/contact"
                 onClick={closeMobileMenu}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

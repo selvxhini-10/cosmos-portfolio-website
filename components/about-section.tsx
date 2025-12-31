@@ -2,13 +2,37 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Cpu, Rocket, Brain, Terminal } from "lucide-react"
+import { Code, Cpu, Brain, Zap } from "lucide-react"
 
-const stats = [
-  { label: "Years in Orbit", value: "5+", icon: Rocket },
-  { label: "Missions Completed", value: "50+", icon: Terminal },
-  { label: "Technologies Mastered", value: "25+", icon: Cpu },
-  { label: "AI Models Deployed", value: "15+", icon: Brain },
+const currentWork = [
+  {
+    id: 1,
+    title: "Multi-Agent Systems",
+    description: "Exploring Multi-Agent Orchestration and Physical AI with World Foundation Models (WFMs)",
+    icon: Brain,
+    color: "#FFB460",
+  },
+  {
+    id: 2,
+    title: "Embedded Systems",
+    description: "Gaining Hands-on experience with STM32 Nucleo Board and C++ programming",
+    icon: Cpu,
+    color: "#FF851B",
+  },
+  {
+    id: 3,
+    title: "Full-Stack Development",
+    description: "Building scalable web applications with modern frameworks and cloud technologies",
+    icon: Code,
+    color: "#FF4136",
+  },
+  {
+    id: 4,
+    title: "AI Engineering",
+    description: "Developing and deploying machine learning models for real-world applications",
+    icon: Zap,
+    color: "#FFB460",
+  },
 ]
 
 export function AboutSection() {
@@ -21,9 +45,6 @@ export function AboutSection() {
       ref={containerRef}
       className="relative py-24"
     >
-      {/* Gradient fade at top */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" style={{ zIndex: 20 }} />
-
       {/* Black Hole Video Background - Optimized */}
       <div className="absolute top-0 right-0 w-full md:w-3/4 lg:w-2/3 h-[600px] md:h-[800px] overflow-hidden" style={{ zIndex: -10 }}>
         <video
@@ -31,26 +52,23 @@ export function AboutSection() {
           loop
           muted
           playsInline
-          preload="none"
+          preload="auto"
           className="absolute top-0 right-0 w-full h-full opacity-60"
           style={{ 
             transform: 'translate3d(0, 0, 0)',
-            willChange: 'auto',
+            backfaceVisibility: 'hidden',
             objectFit: 'cover'
           }}
         >
-          <source src="/videos/blackhole.mp4" type="video/mp4" />
+          <source src="/videos/about.mp4" type="video/mp4" />
         </video>
-        {/* Simplified gradients */}
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-cosmic-black/50 to-cosmic-black" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cosmic-black/30 to-cosmic-black" />
-      </div>
+          </div>
       
       {/* Section Background */}
-      <div className="absolute inset-0 bg-cosmic-black/40" style={{ zIndex: -20 }} />
+      <div className="absolute inset-0" style={{ backgroundColor: 'rgba(10, 10, 20, 0.4)', zIndex: -20 }} />
 
       <div className="relative max-w-6xl mx-auto px-6">
-        {/* Terminal Header */}
+         {/* Terminal Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -90,78 +108,93 @@ export function AboutSection() {
           </div>
         </motion.div>
 
-        {/* About Content - Increased gap from gap-12 to gap-16 */}
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        {/* About Content */}
+        <div className="grid lg:grid-cols-5 gap-8">
+          {/* Left: Bio Card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.4, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
+            className="lg:col-span-2 flex flex-col"
           >
-            <div className="space-y-6 text-cosmic-white/80 leading-relaxed" style={{ letterSpacing: '0.02em' }}>
-              <p className="text-lg">
-                [placeholder text] Greetings, fellow explorer. I'm a full-stack developer with a passion for building digital experiences
-                that push the boundaries of what's possible.
-              </p>
-              <p>
-                My journey through the cosmos of code began years ago, and since then, I've navigated through
-                countless technologies, from the familiar territories of React and Node.js to the uncharted depths of
-                machine learning and AI.
-              </p>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.4, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="mt-8 p-4 border-2 border-cosmic-gold rounded-lg bg-cosmic-gold/5"
+            <div 
+              className="p-6 rounded-xl flex-1 flex flex-col"
               style={{
-                boxShadow: '0 0 25px rgba(255,180,100,0.3), inset 0 0 20px rgba(255,180,100,0.05)'
+                borderWidth: '1px',
+                borderColor: 'rgba(255, 180, 96, 0.2)',
+                backgroundColor: 'rgba(10, 10, 20, 0.5)',
+                boxShadow: '0 0 20px rgba(255,180,100,0.15)'
               }}
             >
-              <div className="flex items-center gap-2 text-cosmic-gold text-sm">
-                <span className="w-2 h-2 bg-cosmic-gold rounded-full animate-pulse" />
-                Seeking Summer 2026 Opportunities 
-              </div>
-            </motion.div>
+              <h3 className="text-xl font-bold mb-4" style={{ color: '#FFB460' }}>
+                Background
+              </h3>
+              <p className="leading-relaxed mb-6 flex-1" style={{ color: 'rgba(255, 255, 255, 0.8)', letterSpacing: '0.02em' }}>
+                As a second-year Computer Engineering student at the University of Waterloo, I'm interested in building scalable, innovative solutions at the intersection of software development, AI, machine learning and embedded systems.
+              </p>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                className="p-4 rounded-lg mt-auto"
+                style={{
+                  borderWidth: '1px',
+                  borderColor: 'rgba(255, 180, 96, 0.3)',
+                  backgroundColor: 'rgba(255, 180, 96, 0.05)'
+                }}
+              >
+                <div className="flex items-center gap-2 text-sm" style={{ color: '#FFB460' }}>
+                  <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#FFB460' }} />
+                  Seeking Summer 2026 Opportunities
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
 
-          {/* Stats Grid - Optimized Animations */}
+          {/* Right: Current Work Cards */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.4, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-            className="grid grid-cols-2 gap-4"
+            className="lg:col-span-3"
           >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ 
-                  duration: 0.3, 
-                  delay: 0.3 + index * 0.05,
-                  ease: [0.4, 0, 0.2, 1]
-                }}
-                whileHover={{ 
-                  scale: 1.03,
-                  transition: { duration: 0.15 }
-                }}
-                className="p-6 rounded-xl bg-cosmic-black/50 group border-2 border-cosmic-gold/30 hover:border-cosmic-gold/60"
-                style={{
-                  boxShadow: '0 0 20px rgba(255,180,100,0.2), inset 0 0 20px rgba(255,180,100,0.03)',
-                  transition: 'border-color 0.2s ease-out'
-                }}
-              >
-                <stat.icon 
-                  className="w-8 h-8 text-cosmic-gold mb-4" 
-                  style={{
-                    transition: 'transform 0.2s ease-out'
+            <h3 className="text-xl font-bold mb-6" style={{ color: '#FFB460' }}>
+              What I'm Working On
+            </h3>
+            
+            <div className="grid sm:grid-cols-2 gap-4">
+              {currentWork.map((work, index) => (
+                <motion.div
+                  key={work.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ 
+                    duration: 0.3, 
+                    delay: 0.3 + index * 0.05,
+                    ease: [0.4, 0, 0.2, 1]
                   }}
-                />
-                <div className="text-3xl font-bold text-cosmic-white mb-1">{stat.value}</div>
-                <div className="text-sm text-cosmic-white/50 uppercase tracking-wider">{stat.label}</div>
-              </motion.div>
-            ))}
+                  className="p-5 rounded-xl"
+                  style={{
+                    borderWidth: '1px',
+                    borderColor: 'rgba(255, 180, 96, 0.2)',
+                    backgroundColor: 'rgba(10, 10, 20, 0.5)',
+                    boxShadow: '0 0 15px rgba(255,180,100,0.1)'
+                  }}
+                >
+                  <work.icon 
+                    className="w-8 h-8 mb-3" 
+                    style={{ color: work.color }}
+                  />
+                  <h4 className="text-lg font-bold mb-2" style={{ color: '#FFFFFF' }}>
+                    {work.title}
+                  </h4>
+                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                    {work.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>

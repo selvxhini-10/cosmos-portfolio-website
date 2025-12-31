@@ -118,10 +118,10 @@ const experiences = [
     date: "Jul. 2022 - Sep. 2022",
     icon: "/images/brandeq.jpeg",
     iconBg: "#ffa500",
-    skills: ["Fullstack", "Marketing & Design"],
+    skills: ["Fullstack", "Supabase", "Flutter"],
     points: [
       "Enhanced SEO by implementing WCAG 2.0 accessibility standards, PR backlinking and UX/UI design with WordPress and JavaScript",
-      "Designed the front end of a mobile application for iOS/Android using Flutter",
+      "Designed a fullstack mobile application for iOS and Android using Flutter and Supabase",
       "Improved mobile optimization by 60%, as endorsed by client feedback, by redesigning 25+ websites and applications",
     ],
   },
@@ -133,7 +133,7 @@ export function ExperienceSection() {
   return (
     <>
        <section id="experience" ref={containerRef} className="relative z-[1]">
-        <div className="absolute inset-0 bg-cosmic-black/40 backdrop-blur-sm -z-10" />
+        <div className="absolute inset-0 bg-cosmic-black/40 -z-10" />
         <div className="relative max-w-7xl mx-auto px-6">
              {/* Section Header */}
                     <motion.div
