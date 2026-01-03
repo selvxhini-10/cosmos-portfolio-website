@@ -127,8 +127,7 @@ export function ProjectsSection() {
   }
 
   return (
-    <section id="projects" ref={containerRef} className="relative py-32 z-[5] bg-cosmic-black">
-      <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black via-cosmic-deep to-cosmic-black -z-10" />
+  <section id="projects" ref={containerRef} className="relative z-10 py-32 bg-cosmic-black">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
@@ -267,7 +266,7 @@ export function ProjectsSection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 flex items-center justify-center p-4 bg-cosmic-black/95 overflow-y-auto z-50 pt-24"
+            className="fixed inset-0 flex items-center justify-center p-4 bg-cosmic-black/95 overflow-y-auto z-[50] pt-24"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}

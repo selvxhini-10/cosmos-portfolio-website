@@ -43,7 +43,7 @@ export function AboutSection() {
     <section
       id="about"
       ref={containerRef}
-      className="relative py-24"
+      className="relative z-10 py-24"
     >
       {/* Black Hole Video Background - Optimized */}
       <div className="absolute top-0 right-0 w-full md:w-3/4 lg:w-2/3 h-[600px] md:h-[800px] overflow-hidden" style={{ zIndex: -10 }}>
@@ -130,25 +130,9 @@ export function AboutSection() {
                 Background
               </h3>
               <p className="leading-relaxed mb-6 flex-1" style={{ color: 'rgba(255, 255, 255, 0.8)', letterSpacing: '0.02em' }}>
-                As a second-year Computer Engineering student at the University of Waterloo, I'm interested in building scalable, innovative solutions at the intersection of software development, AI, machine learning and embedded systems.
-              </p>
+                As a second-year ECE student at UWaterloo, I build scalable, innovative solutions at the intersection of software development, AI, machine learning and embedded systems.
+<br /><br/>Beyond tech, I enjoy learning about philosophy, cognitive science and astrophysics. A fun fact about me: I published my first short story with Polar Expressions Publishing at age seven! In my free time, I practice calligraphy and read dystopian fiction.</p>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={isInView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.4, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                className="p-4 rounded-lg mt-auto"
-                style={{
-                  borderWidth: '1px',
-                  borderColor: 'rgba(255, 180, 96, 0.3)',
-                  backgroundColor: 'rgba(255, 180, 96, 0.05)'
-                }}
-              >
-                <div className="flex items-center gap-2 text-sm" style={{ color: '#FFB460' }}>
-                  <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: '#FFB460' }} />
-                  Seeking Summer 2026 Opportunities
-                </div>
-              </motion.div>
             </div>
           </motion.div>
 

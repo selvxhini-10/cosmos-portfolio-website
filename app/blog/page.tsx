@@ -40,7 +40,7 @@ export default function BlogPage() {
               className="mb-8"
             >
               <Link
-                href="/"
+                href="/home"
                 className="inline-flex items-center gap-2 text-cosmic-gold hover:text-cosmic-orange transition-colors duration-300 font-mono"
               >
                 <ArrowLeft className="w-4 h-4" />

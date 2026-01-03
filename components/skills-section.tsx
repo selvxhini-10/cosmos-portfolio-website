@@ -52,7 +52,7 @@ export function SkillsSection() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
 
   return (
-    <section id="skills" ref={containerRef} className="relative">
+  <section id="skills" ref={containerRef} className="relative z-10">
       <div className="absolute inset-0 bg-cosmic-black/40 -z-10" />
 
       <div className="relative max-w-7xl mx-auto px-6 text-center">

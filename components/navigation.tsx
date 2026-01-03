@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
 const navItems = [
-  { name: "About", href: "/#about" },
-  { name: "Skills", href: "/#skills" },
-  { name: "Experience", href: "/#experience" },
-  { name: "Projects", href: "/#projects" },
-  { name: "Blog", href: "/#blog" },
+  { name: "About", href: "/home/#about" },
+  { name: "Skills", href: "/home/#skills" },
+  { name: "Projects", href: "/home/#projects" },
+  { name: "Experience", href: "/home/#experience" },
+  { name: "Blog", href: "/blog" },
 ]
 
 export function Navigation() {
@@ -60,7 +60,7 @@ export function Navigation() {
         <div className="flex items-center justify-between lg:grid lg:grid-cols-3 gap-4">
           {/* Left: Logo */}
           <motion.a
-            href="/"
+            href="/home"
             className="text-sm sm:text-base lg:text-lg font-bold tracking-wider text-cosmic-gold justify-self-start z-[10001]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -119,57 +119,50 @@ export function Navigation() {
       </div>
 
       {/* Full-Screen Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 lg:hidden bg-gradient-to-br from-cosmic-black via-cosmic-deep to-cosmic-black overflow-y-auto"
-            style={{ zIndex: 10000 }}
-          >
-            {/* Logo at Top */}
-            <div className="flex justify-center pt-24 mb-8">
-              <h1 className="text-2xl sm:text-3xl font-bold text-cosmic-gold" style={{ letterSpacing: '0.1em' }}>
-                Selvahini Kamalarajan
-              </h1>
-            </div>
+     <AnimatePresence>
+  {isMobileMenuOpen && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 lg:hidden bg-gradient-to-br from-cosmic-black via-cosmic-deep to-cosmic-black"
+      style={{ zIndex: 10000 }}
+    >
+      {/* Logo */}
+      <div className="absolute top-16 inset-x-0 flex justify-center pointer-events-none">
+        {/* Logo */}
+      </div>
 
-            {/* Menu Content */}
-            <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 gap-6">
-              {navItems.map((item, index) => (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  onClick={closeMobileMenu}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="text-cosmic-white hover:text-cosmic-gold transition-colors duration-150 text-2xl tracking-widest uppercase font-bold"
-                  style={{ letterSpacing: '0.15em' }}
-                >
-                  {item.name}
-                </motion.a>
-              ))}
-              <motion.a
-                href="/contact"
-                onClick={closeMobileMenu}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navItems.length * 0.1 }}
-                className="mt-8 px-8 py-4 bg-transparent text-cosmic-gold hover:bg-cosmic-gold/10 rounded-full text-lg font-bold tracking-wider uppercase transition-colors border-2 border-cosmic-gold"
-                style={{
-                  boxShadow: '0 0 30px rgba(255,180,100,0.6), 0 0 60px rgba(255,180,100,0.3), inset 0 0 25px rgba(255,180,100,0.1)',
-                  letterSpacing: '0.1em'
-                }}
-              >
-                Contact
-              </motion.a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Scrollable Menu Content */}
+      <div className="flex flex-col items-center justify-center min-h-full px-6 py-32 gap-6 overflow-y-auto">
+        {navItems.map((item, index) => (
+          <motion.a
+            key={item.name}
+            href={item.href}
+            onClick={closeMobileMenu}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.08 }}
+            className="text-cosmic-white hover:text-cosmic-gold text-xl sm:text-2xl tracking-widest uppercase font-bold"
+          >
+            {item.name}
+          </motion.a>
+        ))}
+
+        <motion.a
+          href="/contact"
+          onClick={closeMobileMenu}
+          className="mt-10 px-8 py-4 text-cosmic-gold border-2 border-cosmic-gold rounded-full uppercase font-bold tracking-wider"
+        >
+          Contact
+        </motion.a>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
+
     </motion.nav>
   )
 }

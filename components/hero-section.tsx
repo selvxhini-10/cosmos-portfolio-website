@@ -8,6 +8,15 @@ export function HeroSection() {
       id="home"
       className="relative min-h-screen flex flex-col bg-cosmic-black overflow-hidden"
     >
+      {/* Hero Background GIF */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden" style={{ zIndex: 0 }}>
+        <img
+          src="/videos/hero.gif"
+          alt="Hero background"
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
+          
+        />
+      </div>
 
       {/* Main Content */}
       <div className="relative z-10 flex-1 flex flex-col px-6 max-w-6xl mx-auto w-full">
@@ -16,7 +25,7 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-cosmic-gold bg-cosmic-gold/10">
             <span className="w-2 h-2 rounded-full bg-cosmic-gold animate-pulse" />
             <span className="text-cosmic-gold text-sm tracking-wide">
-              Available for opportunities
+              Seeking Summer 2026 Opportunities
             </span>
           </div>
         </div>
@@ -28,7 +37,7 @@ export function HeroSection() {
               Hi, I’m
             </span>
             <span className="block text-gradient-red-gold tracking-wide">
-              Selvahini <br />Kamalarajan
+              Selvahini Kamalarajan
             </span>
           </h1>
 

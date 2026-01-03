@@ -132,8 +132,7 @@ export function ExperienceSection() {
     const isInView = useInView(containerRef, { once: true, margin: "-100px" })
   return (
     <>
-       <section id="experience" ref={containerRef} className="relative z-[1]">
-        <div className="absolute inset-0 bg-cosmic-black/40 -z-10" />
+  <section id="experience" ref={containerRef} className="relative z-1">
         <div className="relative max-w-7xl mx-auto px-6">
              {/* Section Header */}
                     <motion.div

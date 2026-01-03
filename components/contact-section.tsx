@@ -50,7 +50,7 @@ const Spline = dynamic(
 
   return (
     <>
-      <section id="contact" ref={containerRef} className="relative py-24 z-[1]">
+  <section id="contact" ref={containerRef} className="relative z-10 py-24">
         <div className="absolute inset-0 bg-cosmic-black/40 -z-10" />
 
         {/* Nebula glow effect */}
