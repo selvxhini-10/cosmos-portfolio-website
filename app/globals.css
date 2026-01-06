@@ -84,6 +84,54 @@
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
 }
+/* Headings */
+.prose h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: #ffb460;
+  letter-spacing: 0.05em;
+}
+
+.prose h3 {
+  margin-top: 2rem;
+  color: #ffd9a0;
+}
+
+/* Paragraph spacing */
+.prose p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.8;
+}
+
+/* Lists */
+.prose ul {
+  margin-top: 1.25rem;
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+}
+
+.prose ul li {
+  margin-top: 0.5rem;
+}
+
+/* Strong / emphasis */
+.prose strong {
+  color: #ffd9a0;
+  font-weight: 600;
+}
+
+/* Iframe (PDF embeds) */
+.prose iframe {
+  width: 100%;
+  height: 650px;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 180, 96, 0.2);
+  box-shadow: 0 0 40px rgba(255, 180, 96, 0.15);
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
 
 @theme inline {
   /* Using Cinzel as the main elegant font */

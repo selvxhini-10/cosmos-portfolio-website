@@ -10,15 +10,9 @@ import Spline from '@splinetool/react-spline'
 import { blogPosts } from "@/lib/data/blogPosts"
 
 export default function BlogPage() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
-
-  const categories = Array.from(new Set(blogPosts.map((post) => post.category))).filter(Boolean) as string[]
-  
-  const filteredPosts = selectedCategory
-    ? blogPosts.filter((post) => post.category === selectedCategory)
-    : blogPosts
+  const filteredPosts = blogPosts
 
   return (
     <main className="relative min-h-screen overflow-x-hidden">
@@ -49,7 +43,7 @@ export default function BlogPage() {
             </motion.div>
 
             {/* 3D Brain Model Header */}
-<div className="relative w-full h-[400px] md:h-[500px] mb-12">
+<div className="relative w-full h-[400px] md:h-[500px]">
   
   {/* Spline Brain — interactive, no box */}
   <Spline
@@ -57,13 +51,7 @@ export default function BlogPage() {
     className="absolute inset-0 w-full h-full"
   />
 
-  {/* Edge fade: top */}
-  <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" />
-
-  {/* Edge fade: bottom */}
-  <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cosmic-black/90 via-cosmic-black/60 to-transparent pointer-events-none" />
-
-  {/* Title overlay — UNCHANGED */}
+  {/* Title overlay */}
   <div className="absolute bottom-0 left-0 right-0 p-8 pointer-events-none">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -78,43 +66,11 @@ export default function BlogPage() {
         </span>
       </h1>
       <p className="text-cosmic-white/70 text-lg md:text-xl font-mono">
-        {">> Transmissions from the code frontier"}
+        {">> Thoughts & Insights"}
       </p>
     </motion.div>
   </div>
 </div>
-
-            {/* Category Filter */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap gap-3 mb-12 justify-center"
-            >
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className={`px-4 py-2 rounded-full font-mono text-sm transition-all duration-300 ${
-                  selectedCategory === null
-                    ? "bg-cosmic-gold text-cosmic-black shadow-[0_0_20px_rgba(255,180,100,0.4)]"
-                    : "bg-cosmic-black/50 text-cosmic-white/60 border border-cosmic-gold/20 hover:border-cosmic-gold/40"
-                }`}
-              >
-                All Posts
-              </button>
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category ?? null)}
-                  className={`px-4 py-2 rounded-full font-mono text-sm transition-all duration-300 ${
-                    selectedCategory === category
-                      ? "bg-cosmic-gold text-cosmic-black shadow-[0_0_20px_rgba(255,180,100,0.4)]"
-                      : "bg-cosmic-black/50 text-cosmic-white/60 border border-cosmic-gold/20 hover:border-cosmic-gold/40"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </motion.div>
           </div>
         </section>
 
@@ -138,12 +94,6 @@ export default function BlogPage() {
                         FEATURED
                       </div>
                     )}
-                    
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="px-3 py-1 text-xs font-mono text-cosmic-gold bg-cosmic-gold/10 rounded-full border border-cosmic-gold/20">
-                        {post.category}
-                      </span>
-                    </div>
                     
                     <h2 className="text-xl font-bold text-cosmic-white mb-3 group-hover:text-cosmic-gold transition-colors duration-300">
                       {post.title}

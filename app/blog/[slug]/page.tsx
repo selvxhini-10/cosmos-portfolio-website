@@ -3,6 +3,10 @@
 import { notFound } from "next/navigation"
 import { blogPosts } from "@/lib/data/blogPosts"
 import { Calendar, Clock, Tag } from "lucide-react"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+import dedent from "dedent"
+import rehypeRaw from "rehype-raw"
 
 type BlogPostPageProps = {
   params: { slug: string }
@@ -49,9 +53,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </header>
 
         {/* Content */}
-        <section className="prose prose-invert prose-lg max-w-none">
-          {post.content}
-        </section>
+          <section className="prose prose-invert prose-lg max-w-none">
+            <ReactMarkdown
+  remarkPlugins={[remarkGfm]}
+  rehypePlugins={[rehypeRaw]}
+  components={{
+    p: ({ children }) => (
+      <p className="leading-relaxed mb-6 whitespace-pre-line">
+        {children}
+      </p>
+    ),
+      ul: ({ children }) => (
+      <ul className="list-disc pl-6 space-y-2 mb-8">{children}</ul>
+    ),
+    ol: ({ children }) => (
+      <ol className="list-decimal pl-6 space-y-2">{children}</ol>
+    ),
+    iframe: ({ ...props }) => (
+      <div className="my-12">
+        <iframe
+          {...props}
+          className="w-full h-[650px] rounded-xl border border-cosmic-gold/20 shadow-[0_0_40px_rgba(255,180,96,0.15)]"
+        />
+      </div>
+    ),
+  }}
+>
+  {dedent(post.content).trimEnd()}
+</ReactMarkdown>
+
+
+
+          </section>
 
         {/* AI Recommendations (future hook) */}
         <section className="mt-16 p-6 border border-cosmic-gold/20 rounded-xl bg-cosmic-black/40">

@@ -33,7 +33,7 @@ const skillCategories = [
   },
   {
     title: "Embedded Systems",
-    skills: ["STM32CubeIDE", "Arduino", "ESP32", "UART", "SPI", "Soldering"],
+    skills: ["STM32CubeIDE", "Quartus Prime", "Arduino", "ESP32", "UART", "SPI", "Soldering"],
   },
   {
     title: "Cloud & DevOps",

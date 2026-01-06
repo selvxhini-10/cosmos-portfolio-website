@@ -45,7 +45,9 @@ export function AboutSection() {
       ref={containerRef}
       className="relative z-10 py-24"
     >
-      {/* Black Hole Video Background - Optimized */}
+            <div className="absolute inset-0 bg-cosmic-black/40 -z-10" />
+
+      {/* Black Hole Video Background - Optimized 
       <div className="absolute top-0 right-0 w-full md:w-3/4 lg:w-2/3 h-[600px] md:h-[800px] overflow-hidden" style={{ zIndex: -10 }}>
         <video
           autoPlay
@@ -63,10 +65,8 @@ export function AboutSection() {
           <source src="/videos/about.mp4" type="video/mp4" />
         </video>
           </div>
-      
-      {/* Section Background */}
-      <div className="absolute inset-0" style={{ backgroundColor: 'rgba(10, 10, 20, 0.4)', zIndex: -20 }} />
-
+          */}
+     
       <div className="relative max-w-6xl mx-auto px-6">
          {/* Terminal Header */}
         <motion.div
