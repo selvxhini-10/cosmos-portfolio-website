@@ -58,7 +58,7 @@ export function HeroSection() {
               View My Work
             </a>
             <a
-              href="#contact"
+              href="/contact"
               className="px-8 py-4 rounded-full font-bold uppercase text-sm tracking-wider border-2 border-cosmic-gold text-cosmic-gold bg-cosmic-black/60"
             >
               Get In Touch
