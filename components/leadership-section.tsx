@@ -59,29 +59,22 @@ export function LeadershipSection() {
             </span>
           </h2>
         </motion.div>
-
-        {/* ───────── INTERACTIVE MODEL ZONE ───────── */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative w-full h-[420px] md:h-[560px] mb-16"
-        >
-          {/* Spline Canvas (interactive) */}
-          <div className="absolute inset-0 w-full h-full flex items-center justify-center">
-            <Spline
-              scene="https://prod.spline.design/cxk6FWHBLJBTmXfI/scene.splinecode"
-              className="w-full h-full"
-            />
-          </div>
-
-          {/* Edge blending ONLY (no pointer blocking) */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-cosmic-black to-transparent pointer-events-none" />
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cosmic-black to-transparent pointer-events-none" />
-
-          {/* Optional subtle glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,140,80,0.12),transparent_65%)] pointer-events-none" />
-        </motion.div>
+<motion.div
+  initial={{ opacity: 0, scale: 0.95 }}
+  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+  transition={{ duration: 0.8, delay: 0.2 }}
+  className="relative w-full h-[420px] md:h-[560px] mb-16 overflow-hidden"
+>
+  {/* Decorative Spline layer */}
+  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <Spline
+      scene="https://prod.spline.design/cxk6FWHBLJBTmXfI/scene.splinecode"
+      className="w-full max-w-[1400px] h-full max-h-[900px]"
+    />
+  </div>
+  {/* Subtle glow */}
+  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,140,80,0.12),transparent_65%)]" />
+</motion.div>
 
         {/* ───────── INITIATIVES (CONTENT ZONE) ───────── */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
