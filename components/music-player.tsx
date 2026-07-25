@@ -7,35 +7,42 @@ const STORAGE_KEY = "cosmic-music-enabled"
 const TARGET_VOLUME = 0.35
 const SRC = "/audio/interstellar-theme.mp3"
 
-/**
- * Module-level singleton audio element so it survives Next.js App Router
- * client-side navigations. React re-mounts components on route change but
- * module scope persists for the lifetime of the browser tab.
- */
-let _audio: HTMLAudioElement | null = null
-let _fadeInterval: ReturnType<typeof setInterval> | null = null
+// ---------------------------------------------------------------------------
+// Singleton helpers anchored on `window` so they survive module re-evaluation
+// (HMR, dynamic-import chunk refresh, React Strict Mode double-mount, etc.).
+// Module-level `let` variables reset whenever the JS chunk is re-parsed;
+// `window.__cosmicAudio` does not — it lives for the entire browser-tab lifetime.
+// ---------------------------------------------------------------------------
+
+declare global {
+  interface Window {
+    __cosmicAudio?: HTMLAudioElement
+    __cosmicFade?: ReturnType<typeof setInterval>
+  }
+}
 
 function getAudio(): HTMLAudioElement {
-  if (!_audio) {
-    _audio = new Audio(SRC)
-    _audio.loop = true
-    _audio.volume = 0
-    _audio.preload = "none"
+  if (!window.__cosmicAudio) {
+    const a = new Audio(SRC)
+    a.loop = true
+    a.volume = 0
+    a.preload = "none"
+    window.__cosmicAudio = a
   }
-  return _audio
+  return window.__cosmicAudio
 }
 
 function clearFade() {
-  if (_fadeInterval !== null) {
-    clearInterval(_fadeInterval)
-    _fadeInterval = null
+  if (window.__cosmicFade != null) {
+    clearInterval(window.__cosmicFade)
+    window.__cosmicFade = undefined
   }
 }
 
 function fadeTo(target: number, onDone?: () => void) {
   const audio = getAudio()
   clearFade()
-  _fadeInterval = setInterval(() => {
+  window.__cosmicFade = setInterval(() => {
     const diff = target - audio.volume
     const step = 0.04
     if (Math.abs(diff) <= step) {
@@ -51,21 +58,21 @@ function fadeTo(target: number, onDone?: () => void) {
 /**
  * Global ambient music toggle.
  * - Off by default (respects browser autoplay policies, no surprise audio).
- * - Singleton <Audio> node lives outside React so navigation never mutes it.
+ * - Audio singleton lives on `window` so navigation and module re-evaluation
+ *   never restart or interrupt playback.
  * - Choice persists across pages and sessions via localStorage.
  * - Volume fades in/out to avoid jarring starts and stops.
  */
 export function MusicPlayer() {
   const [playing, setPlaying] = useState(false)
   const [mounted, setMounted] = useState(false)
-  // Track whether we've already attempted autoplay restore this session
   const restoredRef = useRef(false)
 
   const enable = useCallback(async () => {
     const audio = getAudio()
     try {
-      // If already playing (e.g. navigated back), just sync UI state
       if (!audio.paused) {
+        // Already playing from a previous page — just sync the button state.
         setPlaying(true)
         return
       }
@@ -75,15 +82,12 @@ export function MusicPlayer() {
       setPlaying(true)
       localStorage.setItem(STORAGE_KEY, "true")
     } catch {
-      // Autoplay blocked — user must interact first. The button click is a
-      // valid gesture so this only fails on the very first auto-restore attempt.
       setPlaying(false)
     }
   }, [])
 
   const disable = useCallback(() => {
-    const audio = getAudio()
-    fadeTo(0, () => audio.pause())
+    fadeTo(0, () => getAudio().pause())
     setPlaying(false)
     localStorage.setItem(STORAGE_KEY, "false")
   }, [])
@@ -95,14 +99,14 @@ export function MusicPlayer() {
   useEffect(() => {
     setMounted(true)
 
-    // Sync UI with the singleton audio in case we navigated here mid-play
+    // Sync button with actual audio state on every mount (page navigation).
     const audio = getAudio()
     if (!audio.paused) {
       setPlaying(true)
       return
     }
 
-    // Restore saved preference on first mount only
+    // Restore saved preference once per browser session.
     if (!restoredRef.current) {
       restoredRef.current = true
       if (localStorage.getItem(STORAGE_KEY) === "true") {
@@ -111,8 +115,8 @@ export function MusicPlayer() {
     }
 
     return () => {
-      // Do NOT pause on unmount — that's the whole point. Just cancel any
-      // in-flight fade so it doesn't race with the next mount's fade.
+      // Cancel any in-flight fade on unmount so it doesn't race the next mount.
+      // Do NOT pause — continuous playback across navigations is the whole point.
       clearFade()
     }
   }, [enable])
