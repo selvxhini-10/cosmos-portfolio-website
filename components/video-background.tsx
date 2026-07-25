@@ -1,16 +1,12 @@
 import React from "react"
+import { CosmicBackground } from "@/components/cosmic-background"
 
 export function VideoBackground() {
   return (
-    <video
-      className="absolute inset-0 w-full h-full object-cover z-0"
-      autoPlay
-      muted
-      loop
-      playsInline
-    >
-      <source src="/videos/galaxy.mp4" type="video/mp4" />
-    </video>
+    <div className="absolute inset-0 z-0 h-full w-full bg-cosmic-black">
+      <CosmicBackground />
+      <div className="absolute inset-0 bg-cosmic-black/40" />
+    </div>
   )
 }
 
