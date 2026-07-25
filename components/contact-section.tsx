@@ -4,19 +4,16 @@ import type React from "react"
 
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
-import { PaperPlaneIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons"
-import Spline from '@splinetool/react-spline'
+import { PaperPlaneIcon } from "@radix-ui/react-icons"
 import dynamic from "next/dynamic"
+
+// Load the 3D runtime only in the browser, and only when this module renders it.
+const Spline = dynamic(() => import("@splinetool/react-spline"), { ssr: false })
 
 export function ContactSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
   const [success, setSuccess] = useState(false)
-const Spline = dynamic(
-  () => import("@splinetool/react-spline"),
-  { ssr: false }
-)
 
   const [formState, setFormState] = useState({
     name: "",
@@ -63,17 +60,26 @@ const Spline = dynamic(
           />
         </div>
 
-  {/* Black Hole Video Background*/}
-<div className="absolute bottom-0 left-0 w-full md:w-3/4 lg:w-2/3 h-[600px] md:h-[800px] overflow-hidden pointer-events-none -z-10">
-  <img
-    className="w-full h-full object-cover opacity-60"
-    src="/images/black.gif"
-    alt="Black Hole Background"
-  />
-
-  {/* Bottom fade only (cheap, static) */}
-  <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cosmic-black to-transparent" />
-</div>
+  {/* Black hole video, bottom-left. Only mounts once scrolled into view so it
+      never blocks initial load, and preload="none" defers the network fetch. */}
+  <div className="absolute bottom-0 left-0 w-full md:w-3/4 lg:w-1/2 h-[420px] md:h-[600px] overflow-hidden pointer-events-none -z-10">
+    {isInView && (
+      <video
+        className="w-full h-full object-cover opacity-50"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="none"
+      >
+        <source src="/videos/blackhole2.mp4" type="video/mp4" />
+      </video>
+    )}
+    {/* Fades blend the video into the page background on all edges */}
+    <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-cosmic-black to-transparent" />
+    <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-cosmic-black to-transparent" />
+    <div className="absolute top-0 bottom-0 right-0 w-40 bg-gradient-to-l from-cosmic-black to-transparent" />
+  </div>
       
       <div className="relative max-w-7xl mx-auto px-6 text-center">
          {/* Section Header */}
@@ -99,11 +105,13 @@ const Spline = dynamic(
   {/* Height-defined interaction zone */}
   <div className="relative w-full h-[350px] md:h-[450px] lg:h-[500px]">
     
-    {/* Spline UFO */}
-    <Spline
-      scene="https://prod.spline.design/bRYq5NjKXuiOAAG8/scene.splinecode"
-      className="absolute inset-0 w-full h-full"
-    />
+    {/* Spline UFO — only mounts when the section scrolls into view */}
+    {isInView && (
+      <Spline
+        scene="https://prod.spline.design/bRYq5NjKXuiOAAG8/scene.splinecode"
+        className="absolute inset-0 w-full h-full"
+      />
+    )}
     
 
     {/* Edge fade for blending */}

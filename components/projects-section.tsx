@@ -288,8 +288,10 @@ export function ProjectsSection() {
                   {/* Image Background */}
                   <div className="absolute inset-0">
                     <img
-                      src={project.image}
+                      src={project.image || "/placeholder.svg"}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-cosmic-black via-cosmic-black/80 to-transparent" />

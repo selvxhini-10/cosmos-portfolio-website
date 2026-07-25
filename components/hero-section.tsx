@@ -1,6 +1,7 @@
 "use client"
 
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
+import { CosmicBackground } from "@/components/cosmic-background"
 
 export function HeroSection() {
   return (
@@ -8,14 +9,12 @@ export function HeroSection() {
       id="home"
       className="relative min-h-screen flex flex-col bg-cosmic-black overflow-hidden"
     >
-      {/* Hero Background GIF */}
+      {/* Lightweight interactive cosmic backdrop (replaces 48MB hero GIF) */}
       <div className="absolute inset-0 w-full h-full overflow-hidden" style={{ zIndex: 0 }}>
-        <img
-          src="/videos/hero.gif"
-          alt="Hero background"
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
-          
-        />
+        <CosmicBackground />
+        {/* Black overlays keep text legible over the animation */}
+        <div className="absolute inset-0 bg-cosmic-black/50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black/70 via-transparent to-cosmic-black" />
       </div>
 
       {/* Main Content */}

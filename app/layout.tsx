@@ -2,6 +2,8 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Cinzel, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { MusicPlayer } from "@/components/music-player"
+import { ChatWidget } from "@/components/chat-widget"
 import "./globals.css"
 
 const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-cinzel" })
@@ -40,6 +42,8 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${cinzel.variable} ${geistMono.variable} font-sans antialiased`}>
         {children}
+        <MusicPlayer />
+        <ChatWidget />
         <Analytics />
       </body>
     </html>
