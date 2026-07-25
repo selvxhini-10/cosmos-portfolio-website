@@ -2,9 +2,20 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Cinzel, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { MusicPlayer } from "@/components/music-player"
-import { ChatWidget } from "@/components/chat-widget"
+import dynamic from "next/dynamic"
 import "./globals.css"
+
+// Skip SSR for components that rely on browser APIs (window, Audio, localStorage).
+// Without ssr:false Next.js tries to prerender them during static generation,
+// where React hooks and browser globals don't exist, crashing the build.
+const MusicPlayer = dynamic(
+  () => import("@/components/music-player").then((m) => m.MusicPlayer),
+  { ssr: false }
+)
+const ChatWidget = dynamic(
+  () => import("@/components/chat-widget").then((m) => m.ChatWidget),
+  { ssr: false }
+)
 
 const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-cinzel" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
