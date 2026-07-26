@@ -61,7 +61,7 @@ export default function BlogPage() {
     >
       <h1 className="text-4xl md:text-6xl font-bold text-cosmic-white mb-4">
         <span className="font-mono">BLOG </span>
-        <span className="text-gradient-red-gold animate-text-glow-gradient font-mono">
+        <span className="text-gradient-red-gold font-mono">
           ARCHIVE
         </span>
       </h1>

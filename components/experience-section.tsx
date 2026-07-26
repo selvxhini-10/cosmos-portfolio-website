@@ -142,7 +142,7 @@ export function ExperienceSection() {
                       className="text-center mb-16"
                     >
                       <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white">
-                        WORK <span className="text-gradient-red-gold animate-text-glow-gradient">EXPERIENCE</span>
+                        WORK <span className="text-gradient-red-gold">EXPERIENCE</span>
                       </h2>
                     </motion.div>
 

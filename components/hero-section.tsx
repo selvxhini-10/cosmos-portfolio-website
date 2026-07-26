@@ -48,17 +48,19 @@ export function HeroSection() {
             Delivering human-centered solutions and user-friendly experiences.
           </p>
 
-          {/* CTAs */}
+          {/* CTAs — pure CSS transitions, zero JS overhead */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <a
               href="#projects"
-              className="px-8 py-4 rounded-full font-bold uppercase text-sm tracking-wider bg-gradient-to-r from-cosmic-gold to-cosmic-orange text-cosmic-black"
+              className="px-8 py-4 rounded-full font-bold uppercase text-sm tracking-wider bg-gradient-to-r from-cosmic-gold to-cosmic-orange text-cosmic-black transition-all duration-200 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,180,100,0.5)] active:scale-95"
+              style={{ willChange: "transform" }}
             >
               View My Work
             </a>
             <a
               href="/contact"
-              className="px-8 py-4 rounded-full font-bold uppercase text-sm tracking-wider border-2 border-cosmic-gold text-cosmic-gold bg-cosmic-black/60"
+              className="px-8 py-4 rounded-full font-bold uppercase text-sm tracking-wider border-2 border-cosmic-gold text-cosmic-gold bg-cosmic-black/60 transition-all duration-200 hover:scale-105 hover:bg-cosmic-gold/15 hover:shadow-[0_0_30px_rgba(255,180,100,0.35)] active:scale-95"
+              style={{ willChange: "transform" }}
             >
               Get In Touch
             </a>

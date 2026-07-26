@@ -3,7 +3,11 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Users, Sparkles, Heart, GraduationCap } from "lucide-react"
-import Spline from "@splinetool/react-spline"
+import dynamic from "next/dynamic"
+
+// Spline loads a heavy WebGL runtime — dynamic + ssr:false keeps it out of
+// the initial JS bundle and defers the network fetch until the component mounts.
+const Spline = dynamic(() => import("@splinetool/react-spline"), { ssr: false })
 
 const initiatives = [
   {
@@ -54,7 +58,7 @@ export function LeadershipSection() {
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white mt-2">
             LEADERSHIP &{" "}
-            <span className="text-gradient-red-gold animate-text-glow-gradient">
+            <span className="text-gradient-red-gold">
               MENTORSHIP
             </span>
           </h2>

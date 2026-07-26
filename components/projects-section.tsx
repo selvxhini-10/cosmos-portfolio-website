@@ -224,7 +224,7 @@ export function ProjectsSection() {
           <span className="text-cosmic-gold/60 text-sm tracking-[0.3em] uppercase">My Work</span>
           <h2 className="text-4xl sm:text-5xl font-bold text-cosmic-white mb-4">
             Featured{" "}
-            <span className="text-gradient-red-gold animate-text-glow-gradient">
+            <span className="text-gradient-red-gold">
               Projects
             </span>
           </h2>

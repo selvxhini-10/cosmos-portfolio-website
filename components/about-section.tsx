@@ -95,7 +95,7 @@ export function AboutSection() {
               <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white mb-2">
                 <span>ABOUT </span>
                 <span 
-                  className="text-gradient-red-gold animate-text-glow-gradient"
+                  className="text-gradient-red-gold"
                   style={{ letterSpacing: '0.05em' }}
                 >
                   ME
