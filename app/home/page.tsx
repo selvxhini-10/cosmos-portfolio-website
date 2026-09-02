@@ -19,7 +19,6 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <SkillsSection />
-        <NeuralSection />
         <ProjectsSection />
         <ExperienceSection />
         <LeadershipSection />
