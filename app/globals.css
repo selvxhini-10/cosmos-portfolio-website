@@ -84,6 +84,29 @@
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
 }
+
+/* Hero HUD scanner sweep — slow top-to-bottom pass, fades in/out at the ends */
+@keyframes hero-scan {
+  0% {
+    top: -15%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    top: 115%;
+    opacity: 0;
+  }
+}
+
+.animate-hero-scan {
+  position: absolute;
+  animation: hero-scan 7s ease-in-out infinite;
+}
 /* Headings */
 .prose h2 {
   margin-top: 3rem;

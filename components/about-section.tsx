@@ -27,8 +27,9 @@ export function AboutSection() {
     <section
       id="about"
       ref={(el) => { (ref as React.MutableRefObject<HTMLElement | null>).current = el; onRef(el) }}
-      className="relative z-10 py-24"
+      className="relative z-10 py-16"
     >
+      
       <div className="absolute inset-0 bg-cosmic-black/40 -z-10" />
       <div className="relative max-w-6xl mx-auto px-6">
 

@@ -8,6 +8,30 @@ const experiences = [
   {
     id: 1,
     title: "AI Developer",
+    company_name: "Lynx Software Technologies",
+    date: "May. 2026 - Aug. 2026",
+    icon: "/images/coreavi.jpg",
+    skills: ["Python", "LiteLLM", "PostgreSQL", "LangGraph", "Langfuse"],
+    points: [
+      ],
+  },
+  {
+    id: 2,
+    title: "Firmware Developer",
+    company_name: "UW Orbital",
+    date: "May. 2026 - Present",
+    icon: "/images/uworbital.jpg",
+    skills: ["GitHub Actions", "CMake", "Docker", "Linux / WSL"],
+    points: [
+      "Automated the firmware release pipeline for CubeSat flight software, standardizing builds across 6 hardware/debug configurations ",
+      "Developed Python tooling to package firmware with version metadata, SHA-256 checksums, manifests, and automated integrity verification",
+      "Integrated a GitHub self-hosted runner with Sonatype Nexus for automated publication of versioned firmware artifacts to a centralized repository",
+
+    ],
+  },
+  {
+    id: 3,
+    title: "AI Developer",
     company_name: "Information Systems & Technology, University of Waterloo",
     date: "Sep. 2025 - Dec. 2025",
     icon: "/images/uw.svg",
@@ -19,7 +43,7 @@ const experiences = [
     ],
   },
   {
-    id: 2,
+    id: 4,
     title: "Engineering Outreach Facilitator",
     company_name: "Engineering Outreach, University of Waterloo",
     date: "Jan. 2025 - Apr. 2025",
@@ -32,7 +56,7 @@ const experiences = [
     ],
   },
   {
-    id: 3,
+    id: 5,
     title: "Fullstack Developer",
     company_name: "BrandEQ Group",
     date: "Jul. 2022 - Sep. 2022",
@@ -108,7 +132,7 @@ export function ExperienceSection() {
     <section
       id="experience"
       ref={(el) => { (ref as React.MutableRefObject<HTMLElement | null>).current = el; onRef(el) }}
-      className="relative z-[1] py-24"
+      className="relative z-[1] py-16"
     >
       <div className="relative max-w-7xl mx-auto px-6">
         <div

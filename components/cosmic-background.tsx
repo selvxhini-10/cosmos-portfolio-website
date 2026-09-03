@@ -10,7 +10,7 @@ interface Star {
   twinkleSpeed: number
   twinklePhase: number
   drift: number
-  depth: number  // 0 (far/slow parallax) … 1 (near/fast parallax)
+  depth: number // 0 (far/slow parallax) … 1 (near/fast parallax)
 }
 
 interface ShootingStar {
@@ -27,27 +27,29 @@ interface ShootingStar {
 /**
  * GPU-friendly cosmic backdrop on a single canvas.
  *
+ * v3 changes: the standalone floating-orb layer from v2 read as visual
+ * clutter with no relationship to the rest of the scene, so it's removed.
+ * Instead, prominence comes from building on what was already there:
+ * - The three nebula patches keep their richer multi-stop glow and slow
+ *   pulse, and still track the cursor with a noticeably stronger parallax
+ *   than the original version.
+ * - Each star dot now renders with a small soft halo behind its core point
+ *   (a second, larger, low-alpha radial gradient), so the field reads as
+ *   glowing points of light rather than flat dots — no new objects, just
+ *   more glow on what's already there.
+ *
  * Performance guarantees
  * ─────────────────────
  * • Single canvas, single draw call budget per frame.
  * • DPR capped at 1.5 — no 4× fill-rate on retina.
- * • Mouse parallax uses CSS-transformed layer divs, NOT per-frame canvas
- *   repaints — zero extra draw cost, handled by the GPU compositor.
  * • Star count capped at 220 regardless of screen size.
  * • Shooting-star budget capped at 5 simultaneous.
  * • Tab-hidden → RAF cancelled immediately.
  * • prefers-reduced-motion → single static frame, no RAF.
- *
- * Mouse interactivity
- * ───────────────────
- * Stars are split into three depth layers that translate at different rates
- * as the cursor moves, creating a parallax warp effect. Nebula glows follow
- * the cursor at a very slow rate so the whole background feels alive.
- * Shooting stars spawn toward the cursor position for dramatic flair.
  */
 export function CosmicBackground({ className = "" }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const mouseRef = useRef({ x: 0.5, y: 0.5 })  // normalised 0-1
+  const mouseRef = useRef({ x: 0.5, y: 0.5 }) // normalised 0-1
   const targetMouseRef = useRef({ x: 0.5, y: 0.5 })
 
   useEffect(() => {
@@ -85,11 +87,11 @@ export function CosmicBackground({ className = "" }: { className?: string }) {
         twinkleSpeed: Math.random() * 0.018 + 0.004,
         twinklePhase: Math.random() * Math.PI * 2,
         drift: Math.random() * 0.05 + 0.015,
-        depth: Math.random(),  // parallax depth
+        depth: Math.random(),
       }))
     }
 
-    // ── Mouse tracking (throttled by RAF — no extra listeners needed) ───────
+    // ── Mouse tracking ────────────────────────────────────────────────────
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect()
       targetMouseRef.current = {
@@ -97,7 +99,6 @@ export function CosmicBackground({ className = "" }: { className?: string }) {
         y: (e.clientY - rect.top) / rect.height,
       }
     }
-    // Touch support
     const onTouchMove = (e: TouchEvent) => {
       if (!e.touches[0]) return
       const rect = canvas.getBoundingClientRect()
@@ -113,13 +114,13 @@ export function CosmicBackground({ className = "" }: { className?: string }) {
       if (shootingStars.length >= MAX_SHOOTING) return
       const startX = Math.random() * width * 0.8
       const startY = Math.random() * height * 0.4
-      // Aim loosely toward cursor for drama
       const mx = targetMouseRef.current.x * width
       const my = targetMouseRef.current.y * height
       const base = Math.atan2(my - startY, mx - startX)
       const angle = base + (Math.random() * 0.6 - 0.3)
       shootingStars.push({
-        x: startX, y: startY,
+        x: startX,
+        y: startY,
         len: Math.random() * 120 + 80,
         speed: Math.random() * 6 + 6,
         angle,
@@ -129,30 +130,33 @@ export function CosmicBackground({ className = "" }: { className?: string }) {
       })
     }
 
-    // ── Nebulae (positions lerp toward cursor) ───────────────────────────────
+    // ── Nebulae — richer glow + a slow pulse, stronger cursor tracking ───────
     const nebulae = [
-      { xr: 0.2,  yr: 0.3,  r: 320, color: "255,140,80",  alpha: 0.10 },
-      { xr: 0.8,  yr: 0.65, r: 380, color: "255,65,54",   alpha: 0.07 },
-      { xr: 0.55, yr: 0.15, r: 260, color: "255,180,96",  alpha: 0.06 },
+      { xr: 0.2, yr: 0.3, r: 380, color: "255,150,80", alpha: 0.26 },
+      { xr: 0.8, yr: 0.65, r: 420, color: "255,80,54", alpha: 0.2 },
+      { xr: 0.55, yr: 0.15, r: 300, color: "255,190,96", alpha: 0.17 },
     ]
-    // Current rendered positions (lerped)
-    const nebulaPos = nebulae.map(n => ({ x: n.xr * 1000, y: n.yr * 1000 }))
+    const nebulaPos = nebulae.map((n) => ({ x: n.xr * 1000, y: n.yr * 1000 }))
 
-    const drawNebulae = () => {
-      const mx = mouseRef.current.x - 0.5  // -0.5 … +0.5
+    const drawNebulae = (time: number) => {
+      const mx = mouseRef.current.x - 0.5
       const my = mouseRef.current.y - 0.5
 
       nebulae.forEach((n, i) => {
-        // Each nebula drifts toward a slightly different mouse influence
-        const targetX = (n.xr + mx * 0.04 * (i + 1)) * width
-        const targetY = (n.yr + my * 0.04 * (i + 1)) * height
-        nebulaPos[i].x += (targetX - nebulaPos[i].x) * 0.03
-        nebulaPos[i].y += (targetY - nebulaPos[i].y) * 0.03
+        const targetX = (n.xr + mx * 0.14 * (i + 1)) * width
+        const targetY = (n.yr + my * 0.14 * (i + 1)) * height
+        nebulaPos[i].x += (targetX - nebulaPos[i].x) * 0.07
+        nebulaPos[i].y += (targetY - nebulaPos[i].y) * 0.07
 
+        const pulse = 0.85 + Math.sin(time * 0.00035 + i * 2.1) * 0.15
         const cx = nebulaPos[i].x
         const cy = nebulaPos[i].y
+
+        // Multi-stop gradient reads as a richer glow rather than a flat wash
         const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, n.r)
-        g.addColorStop(0, `rgba(${n.color},${n.alpha})`)
+        g.addColorStop(0, `rgba(${n.color},${n.alpha * pulse})`)
+        g.addColorStop(0.35, `rgba(${n.color},${n.alpha * pulse * 0.55})`)
+        g.addColorStop(0.7, `rgba(${n.color},${n.alpha * pulse * 0.18})`)
         g.addColorStop(1, "rgba(0,0,0,0)")
         ctx.fillStyle = g
         ctx.fillRect(cx - n.r, cy - n.r, n.r * 2, n.r * 2)
@@ -163,31 +167,42 @@ export function CosmicBackground({ className = "" }: { className?: string }) {
     const render = (time: number) => {
       if (!running) return
 
-      // Smoothly lerp mouse toward target (eased, not snappy)
-      mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.06
-      mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.06
+      mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.1
+      mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.1
 
       ctx.clearRect(0, 0, width, height)
-      drawNebulae()
+      drawNebulae(time)
 
       const mx = (mouseRef.current.x - 0.5) * width
       const my = (mouseRef.current.y - 0.5) * height
 
-      // Stars — each layer shifts by a fraction of mouse offset
+      // Stars — a soft halo behind each core dot, both shifted by parallax
       for (const s of stars) {
         s.twinklePhase += s.twinkleSpeed
-        const opacity = s.baseOpacity + Math.sin(s.twinklePhase) * 0.25
+        const opacity = Math.max(0, s.baseOpacity + Math.sin(s.twinklePhase) * 0.25)
         s.y += s.drift
-        if (s.y > height + 2) { s.y = -2; s.x = Math.random() * width }
+        if (s.y > height + 2) {
+          s.y = -2
+          s.x = Math.random() * width
+        }
 
-        // Parallax: near stars (depth→1) shift more, far stars (depth→0) less
-        const parallaxStrength = s.depth * 0.028
+        const parallaxStrength = s.depth * 0.045
         const px = s.x + mx * parallaxStrength
         const py = s.y + my * parallaxStrength
 
+        // Soft halo — only meaningfully visible on the brighter/twinklier stars
+        if (opacity > 0.35) {
+          const haloR = s.radius * 5
+          const halo = ctx.createRadialGradient(px, py, 0, px, py, haloR)
+          halo.addColorStop(0, `rgba(255,225,190,${opacity * 0.35})`)
+          halo.addColorStop(1, "rgba(255,225,190,0)")
+          ctx.fillStyle = halo
+          ctx.fillRect(px - haloR, py - haloR, haloR * 2, haloR * 2)
+        }
+
         ctx.beginPath()
         ctx.arc(px, py, s.radius, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,240,220,${Math.max(0, opacity)})`
+        ctx.fillStyle = `rgba(255,240,220,${opacity})`
         ctx.fill()
       }
 
@@ -226,8 +241,13 @@ export function CosmicBackground({ className = "" }: { className?: string }) {
     }
 
     const handleVisibility = () => {
-      if (document.hidden) { running = false; cancelAnimationFrame(rafId) }
-      else if (!running) { running = true; rafId = requestAnimationFrame(render) }
+      if (document.hidden) {
+        running = false
+        cancelAnimationFrame(rafId)
+      } else if (!running) {
+        running = true
+        rafId = requestAnimationFrame(render)
+      }
     }
 
     resize()
@@ -239,7 +259,8 @@ export function CosmicBackground({ className = "" }: { className?: string }) {
     if (reduceMotion) {
       ctx.clearRect(0, 0, width, height)
       nebulae.forEach((n) => {
-        const cx = n.xr * width; const cy = n.yr * height
+        const cx = n.xr * width
+        const cy = n.yr * height
         const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, n.r)
         g.addColorStop(0, `rgba(${n.color},${n.alpha})`)
         g.addColorStop(1, "rgba(0,0,0,0)")
@@ -266,13 +287,7 @@ export function CosmicBackground({ className = "" }: { className?: string }) {
     }
   }, [])
 
-  return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      className={`block h-full w-full ${className}`}
-    />
-  )
+  return <canvas ref={canvasRef} aria-hidden="true" className={`block h-full w-full ${className}`} />
 }
 
 export default CosmicBackground

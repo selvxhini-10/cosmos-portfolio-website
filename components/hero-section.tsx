@@ -2,6 +2,10 @@
 
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
 import { CosmicBackground } from "@/components/cosmic-background"
+import { GravitationalLensText } from "@/components/gravitational-lens-text"
+import { HudTrigger } from "@/components/hud-overlay"
+import { InteractiveAsteroids } from "@/components/interactive-asteroids"
+import { ScannerSweep } from "@/components/scanner-sweep"
 
 export function HeroSection() {
   return (
@@ -9,35 +13,58 @@ export function HeroSection() {
       id="home"
       className="relative min-h-screen flex flex-col bg-cosmic-black overflow-hidden"
     >
-      {/* Lightweight interactive cosmic backdrop (replaces 48MB hero GIF) */}
+      {/* ── Background stack, bottom → top ──────────────────────────────── */}
       <div className="absolute inset-0 w-full h-full overflow-hidden" style={{ zIndex: 0 }}>
+        {/* 1. Starfield */}
         <CosmicBackground />
-        {/* Black overlays keep text legible over the animation */}
+
+        {/* 2. Dimming overlays — sit directly on the starfield so text stays
+               legible, but BELOW the asteroid layer so asteroids don't get
+               washed out by them */}
         <div className="absolute inset-0 bg-cosmic-black/50" />
-        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black/70 via-transparent to-cosmic-black" />
+        {/* Reaches fully solid black by ~80% down the section (not just at the
+            very last pixel), so there's no visible seam against the next
+            section's flat background — pure CSS, no extra render cost */}
+        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-black/70 via-transparent via-[60%] to-cosmic-black to-[85%]" />
+
+        {/* 3. Breakable asteroid field — rendered last in this stack so it
+               paints on top of the dimming layers and stays crisp/clickable */}
+        <InteractiveAsteroids />
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 flex-1 flex flex-col px-6 max-w-6xl mx-auto w-full">
-        {/* Availability Badge */}
-        <div className="pt-28 md:pt-32 flex justify-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-cosmic-gold bg-cosmic-gold/10">
-            <span className="w-2 h-2 rounded-full bg-cosmic-gold animate-pulse" />
-            <span className="text-cosmic-gold text-sm tracking-wide">
-              Seeking Summer 2026 Opportunities
-            </span>
-          </div>
+      {/* ── Foreground content ──────────────────────────────────────────── */}
+      {/* pointer-events-none on the wrapper lets clicks/hover fall through to
+          the asteroid canvas in empty space; re-enabled per interactive
+          child below so buttons/links/badge still work normally */}
+      <div className="relative z-10 flex-1 flex flex-col px-6 max-w-6xl mx-auto w-full pointer-events-none">
+        {/* Availability Badge — hover to open the HUD readout */}
+        <div className="pt-28 md:pt-32 flex justify-center pointer-events-auto">
+          <HudTrigger
+            lines={[
+              "STATUS: ACTIVE",
+              "TARGETING: SUMMER 2026 OPPORTUNITIES",
+              "LOCATION: WATERLOO, ON",
+              "UPLINK: STABLE",
+            ]}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-cosmic-gold bg-cosmic-gold/10">
+              <span className="w-2 h-2 rounded-full bg-cosmic-gold animate-pulse" />
+              <span className="text-cosmic-gold text-sm tracking-wide">
+                Seeking Summer 2026 Opportunities
+              </span>
+            </div>
+          </HudTrigger>
         </div>
 
         {/* Center Content */}
         <div className="flex-1 flex flex-col justify-center items-center text-center py-8">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight leading-[1.1] max-w-5xl">
-            <span className="block mb-2 text-cosmic-white uppercase tracking-[0.15em]">
-              Hi, I’m
-            </span>
-            <span className="block text-gradient-red-gold tracking-wide">
+            <GravitationalLensText className="block mb-2 text-cosmic-white uppercase tracking-[0.15em]">
+              {"Hi, I'm"}
+            </GravitationalLensText>
+            <GravitationalLensText gradient className="block tracking-wide whitespace-nowrap">
               Selvahini Kamalarajan
-            </span>
+            </GravitationalLensText>
           </h1>
 
           <p className="text-lg md:text-xl lg:text-2xl font-bold text-cosmic-gold mb-6 tracking-wide">
@@ -49,7 +76,7 @@ export function HeroSection() {
           </p>
 
           {/* CTAs — pure CSS transitions, zero JS overhead */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10 pointer-events-auto">
             <a
               href="#projects"
               className="px-8 py-4 rounded-full font-bold uppercase text-sm tracking-wider bg-gradient-to-r from-cosmic-gold to-cosmic-orange text-cosmic-black transition-all duration-200 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,180,100,0.5)] active:scale-95"
@@ -67,7 +94,7 @@ export function HeroSection() {
           </div>
 
           {/* Social Icons */}
-          <div className="flex gap-5 justify-center">
+          <div className="flex gap-5 justify-center pointer-events-auto">
             {[
               { icon: Github, href: "https://github.com/selvxhini-10", label: "GitHub" },
               { icon: Linkedin, href: "https://www.linkedin.com/in/selvahini-kamalarajan/", label: "LinkedIn" },
@@ -95,6 +122,9 @@ export function HeroSection() {
           </div>
         </div>
       </div>
+
+      {/* HUD scan sweep — passes over the whole hero, background and text alike */}
+      <ScannerSweep />
     </section>
   )
 }
