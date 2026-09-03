@@ -4,8 +4,9 @@ import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
 import { CosmicBackground } from "@/components/cosmic-background"
 import { GravitationalLensText } from "@/components/gravitational-lens-text"
 import { HudTrigger } from "@/components/hud-overlay"
-import { InteractiveAsteroids } from "@/components/interactive-asteroids"
+import { InteractiveAsteroids3D } from "@/components/interactive-asteroids"
 import { ScannerSweep } from "@/components/scanner-sweep"
+import dynamic from "next/dynamic"
 
 export function HeroSection() {
   return (
@@ -29,7 +30,7 @@ export function HeroSection() {
 
         {/* 3. Breakable asteroid field — rendered last in this stack so it
                paints on top of the dimming layers and stays crisp/clickable */}
-        <InteractiveAsteroids />
+        <InteractiveAsteroids3D />
       </div>
 
       {/* ── Foreground content ──────────────────────────────────────────── */}
@@ -40,13 +41,14 @@ export function HeroSection() {
         {/* Availability Badge — hover to open the HUD readout */}
         <div className="pt-28 md:pt-32 flex justify-center pointer-events-auto">
           <HudTrigger
-            lines={[
-              "STATUS: ACTIVE",
-              "TARGETING: SUMMER 2026 OPPORTUNITIES",
-              "LOCATION: WATERLOO, ON",
-              "UPLINK: STABLE",
-            ]}
-          >
+  readout={[
+    { label: "Status", value: "Active" },
+    { label: "Role sought", value: "SWE Intern" },
+    { label: "Availability", value: "May – Aug 2026" },
+    { label: "Location", value: "Waterloo, ON" },
+    { type: "bar", label: "Uplink", level: 0.9 },
+  ]}
+>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-cosmic-gold bg-cosmic-gold/10">
               <span className="w-2 h-2 rounded-full bg-cosmic-gold animate-pulse" />
               <span className="text-cosmic-gold text-sm tracking-wide">

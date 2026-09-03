@@ -22,6 +22,8 @@ const skillCategories = [
     skills: [
       "React.js",
       "Next.js",
+      "Vue.js",
+      "Three.js",
       "React Hooks",
       "Tailwind CSS",
       "Bootstrap",
@@ -94,13 +96,16 @@ const skillCategories = [
   },
 
   {
-    title: "Cloud & DevOps",
+    title: "Cloud, Infrastructure & DevOps",
     skills: [
       "Azure Functions",
       "Azure Blob Storage",
       "Azure AI Foundry",
       "Azure Container Apps",
+      "Azure Key Vault",
+      "Bicep",
       "GitHub Actions",
+      "Managed Identity",
       "Docker",
       "CI/CD",
       "Sonatype Nexus",

@@ -11,8 +11,11 @@ const experiences = [
     company_name: "Lynx Software Technologies",
     date: "May. 2026 - Aug. 2026",
     icon: "/images/coreavi.jpg",
-    skills: ["Python", "LiteLLM", "PostgreSQL", "LangGraph", "Langfuse"],
+    skills: ["LLMOps", "PostgreSQL", "LangGraph", "Langfuse"],
     points: [
+      "Optimized and cut response latency by 83% for a RAG Teams agent by reducing foreground model calls and introducing evidence-based citation guardrails",
+      "Performed golden regression testing using Langfuse Annotation Queues, configurable scoring rubrics, and 30+ traces for certification engineer review",
+      "Evaluated LiteLLM and OpenWebUI for enterprise AI access, testing token consumption and soft/hard budget controls for Codex and ChatGPT"
       ],
   },
   {

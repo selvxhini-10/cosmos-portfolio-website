@@ -18,8 +18,7 @@ const WARP_PEAK_SPEED     = 22     // match original's WARP_SPEED for full inten
    Boot lines
 ============================================================ */
 const BOOT_LINES = [
-  { prefix: "$",  text: " boot  selva_os --mode=portfolio" },
-  { prefix: ">>", text: " Scanning local star systems..." },
+  { prefix: "$",  text: " boot  vahini_os --mode=portfolio" },
   { prefix: ">>", text: " Compiling creative modules  [████████] 100%" },
   { prefix: ">>", text: " Establishing deep-space link..." },
   { prefix: "OK", text: " Systems nominal. Identify yourself, pilot." },
@@ -652,7 +651,7 @@ function TerminalWindow({
           className="font-mono text-xs"
           style={{ marginLeft: "1rem", color: "rgba(255,180,96,0.38)", letterSpacing: "0.08em" }}
         >
-          selva_os — transmission_terminal.exe
+          vahini_os — transmission_terminal.exe
         </span>
 
         {/* Ping dot */}
