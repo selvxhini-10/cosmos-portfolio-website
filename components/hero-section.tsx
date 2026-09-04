@@ -40,7 +40,8 @@ export function HeroSection() {
       <div className="relative z-10 flex-1 flex flex-col px-6 max-w-6xl mx-auto w-full pointer-events-none">
         {/* Availability Badge — hover to open the HUD readout */}
         <div className="pt-28 md:pt-32 flex justify-center pointer-events-auto">
-          <HudTrigger
+     
+     {/*}     <HudTrigger
   readout={[
     { label: "Status", value: "Active" },
     { label: "Role sought", value: "SWE Intern" },
@@ -48,14 +49,14 @@ export function HeroSection() {
     { label: "Location", value: "Waterloo, ON" },
     { type: "bar", label: "Uplink", level: 0.9 },
   ]}
->
+>  */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-cosmic-gold bg-cosmic-gold/10">
               <span className="w-2 h-2 rounded-full bg-cosmic-gold animate-pulse" />
               <span className="text-cosmic-gold text-sm tracking-wide">
                 Seeking Summer 2026 Opportunities
               </span>
             </div>
-          </HudTrigger>
+        {/*   </HudTrigger> */}
         </div>
 
         {/* Center Content */}

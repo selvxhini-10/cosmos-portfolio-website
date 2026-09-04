@@ -268,10 +268,6 @@ function RadarCanvas({ active }: { active: boolean }) {
 
       // ── Sweep wedge ─────────────────────────────────────────
       const wedge = Math.PI * 0.28   // ~50° trailing glow
-      const grad  = ctx.createConicalGradient
-        ? null  // browser may not support — fallback below
-        : null
-
       // Wedge as arc fill — radial sweep fan
       ctx.save()
       ctx.globalAlpha = masterAlpha

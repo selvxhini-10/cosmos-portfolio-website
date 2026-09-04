@@ -1,15 +1,13 @@
 "use client"
 
-import { useRef, useState, useMemo } from "react"
+import { useRef, useState } from "react"
 import { BookOpen, ArrowRight, Calendar, Clock, Sparkles } from "lucide-react"
 import Link from "next/link"
-import type { BlogPost } from "@/lib/types/blog"
 import { blogPosts } from "@/lib/data/blogPosts"
 
 export function BlogSection() {
   const ref = useRef<HTMLElement>(null)
   const [visible, setVisible] = useState(false)
-  const [activeCategory, setActiveCategory] = useState("All")
 
   const onRef = (el: HTMLElement | null) => {
     if (!el) return
@@ -20,20 +18,8 @@ export function BlogSection() {
     obs.observe(el)
   }
 
-  // Extract unique categories dynamically
-  const categories = useMemo(() => {
-    const cats = Array.from(new Set(blogPosts.map((p) => p.category)))
-    return ["All", "Software"]
-  }, [])
-
-  // Show latest 3 articles based on selected category filter
-  const displayedPosts = useMemo(() => {
-    const filtered = activeCategory === "All"
-      ? blogPosts
-      : blogPosts.filter((p) => p.category === activeCategory)
-    return filtered.slice(0, 3)
-  }, [activeCategory])
-
+  // Show latest 3 articles
+  const displayedPosts = blogPosts.slice(0, 3)
   const [heroPost, ...secondaryPosts] = displayedPosts
 
   return (
@@ -57,58 +43,37 @@ export function BlogSection() {
           </h2>
         </div>
 
-        {/* Dynamic Category Filters */}
-        <div 
-          className="flex flex-wrap justify-center gap-2 mb-10 transition-all duration-500 ease-out"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(16px)" }}
-        >
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 border ${
-                activeCategory === cat
-                  ? "bg-cosmic-gold text-cosmic-black border-cosmic-gold font-bold shadow-[0_0_15px_rgba(255,180,100,0.3)]"
-                  : "bg-cosmic-black/40 text-cosmic-white/60 border-cosmic-gold/20 hover:border-cosmic-gold/50 hover:text-cosmic-white"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
         {/* Articles Layout Grid */}
         {displayedPosts.length > 0 && (
           <div className="grid lg:grid-cols-3 gap-6 mb-12">
-            
+
             {/* Hero Article (Spans 2 Columns on Large Screens) */}
             {heroPost && (
               <article
-                className="lg:col-span-2 group relative flex flex-col justify-between p-8 border border-cosmic-gold/30 rounded-2xl bg-gradient-to-br from-cosmic-black/80 to-cosmic-black/40 hover:border-cosmic-gold/60 transition-all duration-300 shadow-lg hover:shadow-[0_0_30px_rgba(255,180,100,0.15)]"
+                className="lg:col-span-2 group relative flex flex-col justify-between p-8 border border-cosmic-gold/30 rounded-2xl bg-gradient-to-br from-cosmic-black/80 to-cosmic-black/40 hover:border-cosmic-gold/60 transition-all duration-300 shadow-lg hover:shadow-[0_0_30px_rgba(255,180,100,0.15)] overflow-hidden"
                 style={{
                   opacity: visible ? 1 : 0,
                   transform: visible ? "none" : "translateY(20px)",
                 }}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="px-3 py-1 text-xs font-mono text-cosmic-gold bg-cosmic-gold/10 rounded-full border border-cosmic-gold/30 flex items-center gap-1.5">
-                      <Sparkles className="w-3 h-3" />
-                      {heroPost.category}
-                    </span>
-                    <span className="text-xs font-mono text-cosmic-gold/60">LATEST ENTRY</span>
-                  </div>
 
-                  <h3 className="text-2xl md:text-3xl font-bold text-cosmic-white mb-3 group-hover:text-cosmic-gold transition-colors duration-200">
+                <div className="relative">
+                  <div className="flex items-center justify-end mb-4">
+  <span className="text-xs font-mono text-cosmic-gold/60">LATEST ENTRY</span>
+</div>
+
+                  <h3 className="text-2xl md:text-4xl font-bold text-cosmic-white mb-4 tracking-tight group-hover:text-cosmic-gold transition-colors duration-200">
                     {heroPost.title}
                   </h3>
-                  
-                  <p className="text-cosmic-white/70 mb-6 text-base leading-relaxed line-clamp-3">
+
+                  <p className="text-cosmic-white/70 mb-6 text-base md:text-lg leading-relaxed">
                     {heroPost.excerpt}
                   </p>
                 </div>
 
-                <div>
+                <div className="relative">
+                  <div className="h-px w-full bg-gradient-to-r from-cosmic-gold/30 via-cosmic-gold/10 to-transparent mb-6" />
+
                   <div className="flex items-center gap-4 text-xs font-mono text-cosmic-white/40 mb-6">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5 text-cosmic-gold/70" />
@@ -144,16 +109,9 @@ export function BlogSection() {
                   }}
                 >
                   <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="px-2.5 py-0.5 text-[10px] font-mono text-cosmic-gold bg-cosmic-gold/10 rounded-full border border-cosmic-gold/20">
-                        {article.category}
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg font-bold text-cosmic-white mb-2 group-hover:text-cosmic-gold transition-colors duration-200">
-                      {article.title}
+                  <h3 className="text-lg font-bold text-cosmic-white mb-2 mt-1 group-hover:text-cosmic-gold transition-colors duration-200">{article.title}
                     </h3>
-                    <p className="text-cosmic-white/55 mb-4 line-clamp-2 text-sm leading-relaxed">
+                    <p className="text-cosmic-white/55 mb-4 line-clamp-3 text-sm leading-relaxed">
                       {article.excerpt}
                     </p>
                   </div>
