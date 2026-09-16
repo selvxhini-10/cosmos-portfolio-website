@@ -36,7 +36,7 @@ export function BlogSection() {
           style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(24px)" }}
         >
           <p className="text-cosmic-gold/60 text-xs tracking-[0.3em] uppercase font-mono mb-2">
-            // THOUGHT STREAM
+            PERSONAL LEARNINGS
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-cosmic-white">
             RECENT <span className="text-gradient-red-gold">WRITINGS</span>

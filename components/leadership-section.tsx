@@ -44,7 +44,7 @@ const rightCards = [
 ] as const
 
 const conferencePanel = {
-  eyebrow: "Student Speaker",
+  eyebrow: "17th Annual",
   title: "UW Teaching & Learning Conference",
   description:
     "Co-authored a panel proposal and joined as a student speaker, discussing the evolving role of AI in higher education with faculty and peers — a continuation of the conversations started at the GenAI Booths.",
@@ -52,7 +52,7 @@ const conferencePanel = {
   stats: [
     { label: "Role", value: "Student Panelist" },
     { label: "Format", value: "Panel Discussion" },
-    { label: "Reach", value: "700+ Engaged" },
+    { label: "Reach", value: "40+ Engaged" },
   ],
 }
 

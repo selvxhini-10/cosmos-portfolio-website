@@ -71,8 +71,7 @@ const projects: Project[] = [
     description: "Self-contained retro arcade handheld built on an ESP32 microcontroller in C using FreeRTOS. Features a TFT display, custom joystick/button input, PWM buzzer audio state machine, and 5 built-in games (Pong, Breakout, Flappy Bird, Space Invaders, Maze).",
     image: "/images/game.jpg",
     tech: ["ESP32", "C", "FreeRTOS", "ESP-IDF v6", "PWM Audio", "SPI TFT"],
-    githubUrl: "#",
-    docsUrl: "#",
+    githubUrl: "https://github.com/selvxhini-10/esp32-game-console",
     height: "medium"
   },
   {
@@ -224,9 +223,20 @@ const projects: Project[] = [
     title: "ESP32 Automated Irrigation System",
     categories: ["Embedded Systems"],
     description: "Automated closed-loop irrigation system utilizing ESP32 microcontrollers, moisture sensors, and dynamic watering thresholds. (Currently In Development)",
-    image: "/images/irrigation.png",
+    image: "/images/irrigation.jpg",
+    githubUrl: "https://github.com/selvxhini-10/esp32-smart-irrigation",
     tech: ["ESP32", "C++", "Sensors", "MQTT"],
     height: "short",
+  },
+   {
+    id: 19,
+    title: "Bracket Bot Sock Matchmaker",
+    categories: ["Embedded Systems"],
+    description: "Automated closed-loop irrigation system utilizing ESP32 microcontrollers, moisture sensors, and dynamic watering thresholds. (Currently In Development)",
+    image: "/images/bracketbot.png",
+    githubUrl: "https://github.com/selvxhini-10/SoleMates",
+    tech: ["ESP32", "C++", "Sensors", "MQTT"],
+    height: "medium",
     disabled: true
   }
 ]

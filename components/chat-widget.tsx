@@ -72,8 +72,8 @@ export function ChatWidget() {
                 <Sparkles className="h-4 w-4" />
               </div>
               <div className="min-w-0">
-                <p className="truncate text-sm font-bold text-cosmic-white">Portfolio Assistant</p>
-                <p className="truncate text-xs text-cosmic-white/50">Ask me about Selvahini</p>
+                <p className="truncate text-sm font-bold text-cosmic-white">Ask me about Selvahini</p>
+                <p className="truncate text-xs text-cosmic-white/50">Coming Soon!</p>
               </div>
             </div>
 
